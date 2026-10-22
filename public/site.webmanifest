@@ -1,0 +1,15 @@
+{
+  "name": "Prospect Road Community Fund",
+  "short_name": "Community Fund",
+  "description": "Pledge, pay securely and follow every dollar.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f2f6fc",
+  "theme_color": "#1d4f97",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,0 +1,871 @@
+<title>Prospect Road Community Fund</title>
+<meta name="description" content="Pledge to the Prospect Road community legal and park fund, pay securely online, and follow every dollar in a live ledger, income statement and balance sheet.">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sunrise sky hero with the fund balance, a milestone scale and neighborhood chart, then a tabbed ledger. */
+:root{
+  --bg:#f2f6fc; --paper:#ffffff; --ink:#0f1f38; --muted:#56657d; --line:#d9e3f0;
+  --blue:#1f5fae; --blue-2:#3d7fd0; --blue-soft:#e4eefa; --blue-pale:#9cc0e8;
+  --sun:#d9822b; --sun-soft:#fdf0e1; --sun-ink:#8a4b0f;
+  --red:#b23b2e; --red-soft:#fbe6e2; --ok:#1d6b45; --ok-soft:#e1f2e8;
+  --sky1:#0b2550; --sky2:#1d4f97; --sky3:#4f8fd6; --sky4:#a9cdf0; --sky5:#f7d3ae; --sky6:#f4a65c;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --shadow:0 1px 2px rgba(15,31,56,.06),0 8px 24px rgba(15,31,56,.06);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#08111f; --paper:#0f1b2e; --ink:#e7eefa; --muted:#9aaac2; --line:#22324b;
+  --blue:#7fb2ef; --blue-2:#9cc5f5; --blue-soft:#15294a; --blue-pale:#35598a;
+  --sun:#f2a85c; --sun-soft:#3a2714; --sun-ink:#f6c48e;
+  --red:#f09486; --red-soft:#3d1f1b; --ok:#7fd1a2; --ok-soft:#14301f;
+  --sky1:#030a18; --sky2:#0b2550; --sky3:#1d4f97; --sky4:#3b6fae; --sky5:#a8674a; --sky6:#d98a4a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#08111f; --paper:#0f1b2e; --ink:#e7eefa; --muted:#9aaac2; --line:#22324b;
+  --blue:#7fb2ef; --blue-2:#9cc5f5; --blue-soft:#15294a; --blue-pale:#35598a;
+  --sun:#f2a85c; --sun-soft:#3a2714; --sun-ink:#f6c48e;
+  --red:#f09486; --red-soft:#3d1f1b; --ok:#7fd1a2; --ok-soft:#14301f;
+  --sky1:#030a18; --sky2:#0b2550; --sky3:#1d4f97; --sky4:#3b6fae; --sky5:#a8674a; --sky6:#d98a4a;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);margin:0}
+.gutter{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h2{font-size:22px;font-weight:700;margin-bottom:12px}
+h3{font-size:16px;font-weight:700}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* Hero: sunrise sky */
+.hero{position:relative;overflow:hidden;color:#fff;
+  background:
+    radial-gradient(60% 45% at 50% 100%, rgba(255,214,150,.95) 0%, rgba(255,190,120,.55) 30%, rgba(255,170,100,0) 62%),
+    linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 30%,var(--sky3) 56%,var(--sky4) 76%,var(--sky5) 90%,var(--sky6) 100%);
+  padding-top:max(28px,env(safe-area-inset-top,0px)); padding-bottom:120px}
+.hero .sunglow{position:absolute;left:76%;bottom:40px;width:260px;height:260px;margin-left:-130px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fffaf0 0%,#ffe2a8 22%,rgba(255,200,120,.55) 40%,rgba(255,190,110,0) 70%)}
+.hero .ridge{position:absolute;left:0;right:0;bottom:0;width:100%;height:70px;display:block}
+.hero .ridge path{fill:var(--bg)}
+.hero .cloud{position:absolute;border-radius:50px;background:rgba(255,255,255,.12);filter:blur(2px)}
+.eyebrow{font:700 12px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#ffe2b8}
+.hero h1{font-size:clamp(30px,5vw,48px);font-weight:800;margin-top:10px;letter-spacing:-.01em;text-shadow:0 2px 18px rgba(5,20,50,.35)}
+.hero .lede{color:#eaf2ff;max-width:60ch;margin:10px 0 0;font-size:17px}
+.hero .cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:-92px;position:relative}
+.tile{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0;box-shadow:var(--shadow)}
+.tile .k{font-size:13px;color:var(--muted)}
+.tile .v{font:500 22px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px;overflow-wrap:anywhere}
+.tile.hl{background:linear-gradient(135deg,var(--sky2),var(--sky3));border-color:transparent;color:#fff}
+.tile.hl .k{color:#dbe9ff}
+
+.card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);min-width:0}
+.cards{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:16px;margin-top:16px;align-items:start}
+.card .sub{font-size:14px;color:var(--muted);margin:-6px 0 12px}
+
+/* Milestone scale */
+.stage{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.stage .big{font:500 26px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.bar{height:14px;background:var(--blue-soft);border-radius:7px;overflow:hidden;margin-top:10px}
+.bar>span{display:block;height:100%;border-radius:7px;background:linear-gradient(90deg,var(--blue),var(--sun));transition:width .5s}
+.scale-meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:6px}
+.ladder{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:0}
+.ladder li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.ladder .dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:1px}
+.ladder li.done .dot{background:var(--ok);border-color:var(--ok);color:var(--paper)}
+.ladder li.now .dot{border-color:var(--sun);background:var(--sun-soft);color:var(--sun-ink)}
+.ladder .t{font-weight:700}
+.ladder .d{font-size:13px;color:var(--muted)}
+.ladder .a{font:500 14px var(--mono);text-align:right;white-space:nowrap}
+.ladder .mini{height:6px;background:var(--blue-soft);border-radius:3px;overflow:hidden;margin-top:6px;max-width:260px}
+.ladder .mini span{display:block;height:100%;background:var(--blue)}
+.track{position:relative;height:30px;margin-top:16px}
+.track .rail{position:absolute;left:0;right:0;top:12px;height:6px;border-radius:3px;background:var(--blue-soft)}
+.track .fill{position:absolute;left:0;top:12px;height:6px;border-radius:3px;background:var(--blue)}
+.track .tick{position:absolute;top:6px;width:2px;height:18px;background:var(--muted);opacity:.5}
+.track-lab{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+
+/* Neighborhood chart */
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:10px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:6px}
+.sw-rec{background:var(--blue)}
+.sw-pl{background:repeating-linear-gradient(135deg,var(--blue-pale) 0 3px,var(--blue-soft) 3px 6px)}
+.hbars{display:grid;gap:12px}
+.hb{display:grid;grid-template-columns:minmax(90px,150px) 1fr;gap:10px;align-items:center;position:relative}
+.hb .name{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb .lane{display:flex;align-items:center;gap:8px;min-width:0}
+.hb .bars{display:flex;gap:2px;height:20px;flex:0 1 auto;min-width:2px}
+.hb .seg{height:100%}
+.hb .seg.rec{background:var(--blue);border-radius:0}
+.hb .seg.pl{background:repeating-linear-gradient(135deg,var(--blue-pale) 0 3px,var(--blue-soft) 3px 6px)}
+.hb .bars .seg:last-child{border-radius:0 4px 4px 0}
+.hb .val{font:500 13px var(--mono);color:var(--ink);white-space:nowrap}
+.hb .hit{position:absolute;inset:-6px 0;cursor:default}
+.tip{position:fixed;z-index:20;pointer-events:none;background:var(--ink);color:var(--paper);border-radius:8px;padding:8px 10px;font-size:13px;box-shadow:var(--shadow);max-width:240px}
+.tip .num{color:var(--paper)}
+details.tbl summary{cursor:pointer;font-size:13px;color:var(--muted);margin-top:12px}
+
+nav.tabs{display:flex;gap:4px;flex-wrap:wrap;border-bottom:2px solid var(--line);margin:26px 0 18px}
+nav.tabs button{font:600 15px var(--body);background:none;border:0;padding:10px 14px;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--sun)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.sheet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--shadow)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:22px}
+form{display:grid;gap:12px}
+.field{display:grid;gap:4px;min-width:0}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+label,.lbl{font-weight:600;font-size:14px}
+.hint{font-size:13px;color:var(--muted)}
+input,select,textarea{font:16px var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 12px;width:100%;min-width:0}
+textarea{font:14px/1.5 var(--mono);min-height:96px}
+.amounts{display:flex;flex-wrap:wrap;gap:8px}
+.amounts button{font:500 15px var(--mono);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:6px 14px;cursor:pointer;color:var(--ink)}
+.amounts button[aria-pressed="true"]{background:var(--blue);color:var(--paper);border-color:var(--blue)}
+.btn{font:700 15px var(--body);border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--blue);color:var(--paper);display:inline-flex;align-items:center;gap:8px;text-decoration:none;justify-content:center}
+.btn.sun{background:linear-gradient(135deg,#f6b46a,#e58a35);color:#2a1503}
+.btn.glass{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:6px 10px;font-size:13px}
+.btn.danger{background:var(--red);color:#fff}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.note{border-radius:9px;padding:10px 12px;font-size:14px;background:var(--blue-soft)}
+.note.warn{background:var(--sun-soft)}
+.note.err{background:var(--red-soft)}
+.tablewrap{overflow-x:auto;margin-top:8px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td.r,th.r{text-align:right}
+tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0}
+tr.sub td{font-weight:600}
+.pill{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.pend{background:var(--sun-soft);color:var(--sun-ink)}
+.pill.due{background:var(--red-soft);color:var(--red)}
+.empty{color:var(--muted);text-align:center;padding:26px 12px}
+.statements{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.stmt .as{font-size:13px;color:var(--muted);margin-bottom:8px}
+.explain{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 4px}
+.explain div{background:var(--bg);border-radius:9px;padding:10px 12px}
+.explain .k{font-size:13px;color:var(--muted)}
+.explain .v{font:500 18px var(--mono);font-variant-numeric:tabular-nums}
+.sharebar{height:8px;background:var(--blue-soft);border-radius:4px;overflow:hidden;min-width:80px}
+.sharebar span{display:block;height:100%;background:var(--blue)}
+.card.flat{box-shadow:none;background:var(--bg);border-color:transparent}
+.svgchart{width:100%;height:auto;display:block;overflow:visible}
+.svgchart .grid{stroke:var(--line);stroke-width:1}
+.svgchart .goal{stroke:var(--sun);stroke-width:1.5}
+.svgchart .axis{fill:var(--muted);font:12px var(--body)}
+.svgchart .lab{fill:var(--ink);font:500 12px var(--mono)}
+.svgchart .line{fill:none;stroke:var(--blue);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.svgchart .wash{fill:var(--blue);opacity:.1}
+.svgchart .dot{fill:var(--blue);stroke:var(--paper);stroke-width:2}
+.svgchart .bar{fill:var(--blue)}
+.svgchart .hit{fill:transparent}
+.hbars.wrapnames .name{white-space:normal;overflow:visible;line-height:1.25}
+footer{margin:30px auto 0;font-size:13px;color:var(--muted);max-width:1080px;padding-bottom:max(40px,env(safe-area-inset-bottom,0px))}
+.confirm{display:inline-flex;gap:6px;align-items:center}
+@media (max-width:820px){
+  .hero .sunglow{left:92%;bottom:30px;width:200px;height:200px;margin-left:-100px;opacity:.75}
+  .hero .lede{text-shadow:0 1px 10px rgba(5,20,50,.45)}
+  .btn.glass{background:rgba(11,37,80,.45)}
+  .summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cards,.grid2,.statements{grid-template-columns:1fr}
+  .row{grid-template-columns:1fr}
+  .explain{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){.bar>span{transition:none}}
+</style>
+
+<header class="hero gutter">
+  <div class="cloud" style="width:180px;height:26px;top:60px;left:8%"></div>
+  <div class="cloud" style="width:240px;height:30px;top:110px;right:6%"></div>
+  <div class="sunglow" aria-hidden="true"></div>
+  <div class="wrap" style="position:relative">
+    <div class="eyebrow" id="orgName">Prospect Road Community Fund</div>
+    <h1>A new day for our neighborhood</h1>
+    <p class="lede">Pledge to the community legal fund, pay securely online, and watch every dollar in the open. If the chance comes, the same fund can help buy the land and turn it into a park for everyone.</p>
+    <div class="cta"><a class="btn sun" href="#tab-pledge" id="ctaPledge">Make a pledge</a><a class="btn glass" href="#tab-statements" id="ctaBooks">See the books</a></div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46 C80 30 140 34 200 40 C260 20 300 18 340 32 C400 12 450 14 500 30 C560 24 600 36 660 30 C720 8 780 10 830 28 C890 22 930 34 990 26 C1050 14 1110 20 1200 34 L1200 70 L0 70 Z"/></svg>
+</header>
+
+<main class="gutter">
+<div class="wrap">
+  <section class="summary" aria-live="polite" aria-label="Fund totals">
+    <div class="tile hl"><div class="k">Cash on hand</div><div class="v" id="tCash">$0.00</div></div>
+    <div class="tile"><div class="k">Received</div><div class="v" id="tRec">$0.00</div></div>
+    <div class="tile"><div class="k">Pledged, not yet received</div><div class="v" id="tOut">$0.00</div></div>
+    <div class="tile"><div class="k">Spent</div><div class="v" id="tExp">$0.00</div></div>
+  </section>
+
+  <div id="status" class="note warn" hidden style="margin-top:14px"></div>
+
+  <div class="cards">
+    <section class="card" aria-labelledby="msTitle">
+      <h2 id="msTitle">From legal fund to community park</h2>
+      <p class="sub">The scale moves to the next milestone as money is received.</p>
+      <div class="stage"><div><div class="hint" id="stageLabel">Current milestone</div><div class="big" id="stageNums">$0 of $10,000</div></div><div class="hint" id="stagePct">0%</div></div>
+      <div class="bar" role="progressbar" id="stageBar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span style="width:0%"></span></div>
+      <ol class="ladder" id="ladder"></ol>
+      <div class="track" aria-hidden="true"><div class="rail"></div><div class="fill" id="trackFill" style="width:0%"></div><div id="trackTicks"></div></div>
+      <div class="track-lab"><span>$0</span><span id="trackMax">$2,000,000 full target</span></div>
+    </section>
+
+    <section class="card" aria-labelledby="nbTitle">
+      <h2 id="nbTitle">Contributions by neighborhood</h2>
+      <p class="sub">Received, plus pledges not yet paid.</p>
+      <div class="legend"><span><i class="sw-rec"></i>Received</span><span><i class="sw-pl"></i>Pledged, not yet received</span></div>
+      <div class="hbars" id="nbChart"></div>
+      <details class="tbl"><summary>Show as table</summary><div class="tablewrap"><table><thead><tr><th>Neighborhood</th><th class="r">Contributors</th><th class="r">Received</th><th class="r">Pledged</th></tr></thead><tbody id="nbTable"></tbody></table></div></details>
+    </section>
+  </div>
+
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="tab-pledge" aria-selected="true" data-tab="pledge">Pledge</button>
+    <button role="tab" id="tab-ledger" aria-selected="false" data-tab="ledger">Ledger</button>
+    <button role="tab" id="tab-statements" aria-selected="false" data-tab="statements">Statements</button>
+    <button role="tab" id="tab-stats" aria-selected="false" data-tab="stats">Statistics</button>
+    <button role="tab" id="tab-shares" aria-selected="false" data-tab="shares">Your share</button>
+    <button role="tab" id="tab-admin" aria-selected="false" data-tab="admin" hidden>Treasurer</button>
+  </nav>
+
+  <!-- PLEDGE -->
+  <section class="sheet" data-panel="pledge" role="tabpanel" aria-labelledby="tab-pledge">
+    <div class="grid2">
+      <div>
+        <h2>Make a pledge</h2>
+        <form id="pledgeForm" novalidate>
+          <div class="row">
+            <div class="field"><label for="pName">Full name</label><input id="pName" autocomplete="name" maxlength="80" required></div>
+            <div class="field"><label for="pEmail">Email</label><input id="pEmail" type="email" autocomplete="email" maxlength="120" required></div>
+          </div>
+          <div class="field"><label for="pAddr">Street address</label><input id="pAddr" autocomplete="street-address" maxlength="160" required><span class="hint">Used only to confirm you are a local resident. Never shown publicly.</span></div>
+          <div class="field"><label for="pArea">Neighborhood</label>
+            <input id="pArea" list="areas" placeholder="e.g. Magnolia Point" maxlength="60" required>
+            <datalist id="areas"><option value="Magnolia Point"></option><option value="Prospect Road"></option><option value="Tuttle Avenue"></option><option value="Whitfield"></option><option value="Other Manatee County"></option><option value="Sarasota County"></option></datalist>
+          </div>
+          <div class="field"><span id="amtLabel" class="lbl">Amount</span>
+            <div class="amounts" role="group" aria-labelledby="amtLabel">
+              <button type="button" data-amt="25" aria-pressed="false">$25</button>
+              <button type="button" data-amt="50" aria-pressed="false">$50</button>
+              <button type="button" data-amt="100" aria-pressed="true">$100</button>
+              <button type="button" data-amt="250" aria-pressed="false">$250</button>
+              <button type="button" data-amt="500" aria-pressed="false">$500</button>
+              <button type="button" data-amt="1000" aria-pressed="false">$1,000</button>
+            </div>
+            <input id="pAmt" type="number" min="1" max="2000000" step="1" value="100" inputmode="decimal" aria-label="Pledge amount in dollars">
+          </div>
+          <div class="field"><label for="pShow">Show me publicly as</label>
+            <select id="pShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select>
+          </div>
+          <button class="btn" type="submit" id="pSubmit">Record my pledge</button>
+          <div id="pMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+      <div>
+        <h2>Pay securely</h2>
+        <p class="hint" style="margin-top:-6px">Payments are handled by a secure third-party platform. This page never sees your card details.</p>
+        <div id="payBox" style="margin-top:10px"></div>
+        <h3 style="margin-top:22px">How your money is protected</h3>
+        <ul class="hint" style="padding-left:18px;margin:8px 0 0">
+          <li>Your name, address and email are visible only to the treasurer.</li>
+          <li>Only the treasurer can confirm money received and record expenses.</li>
+          <li>Every expense is listed in the ledger and statements.</li>
+          <li>If funds are returned, each contributor gets a share in proportion to what they gave.</li>
+        </ul>
+        <h3 style="margin-top:22px">Recent contributors</h3>
+        <div id="recentList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEDGER -->
+  <section class="sheet" data-panel="ledger" role="tabpanel" aria-labelledby="tab-ledger" hidden>
+    <h2>Income</h2>
+    <div class="tablewrap"><table><thead><tr><th>Date</th><th>Contributor</th><th>Neighborhood</th><th>Method</th><th class="r">Amount</th></tr></thead><tbody id="incomeRows"></tbody></table></div>
+    <h2 style="margin-top:26px">Pledges awaiting payment</h2>
+    <div class="tablewrap"><table><thead><tr><th>Contributor</th><th>Neighborhood</th><th class="r">Pledged</th><th class="r">Received</th><th class="r">Outstanding</th></tr></thead><tbody id="pledgeRows"></tbody></table></div>
+    <h2 style="margin-top:26px">Expenses</h2>
+    <div class="tablewrap"><table><thead><tr><th>Date</th><th>Paid to</th><th>Category</th><th>Description</th><th>Status</th><th class="r">Amount</th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+  </section>
+
+  <!-- STATEMENTS -->
+  <section class="sheet" data-panel="statements" role="tabpanel" aria-labelledby="tab-statements" hidden>
+    <div class="statements">
+      <div class="stmt"><h3>Income statement</h3><div class="as" id="isAsOf">From inception to today</div><div class="tablewrap"><table><tbody id="incomeStmt"></tbody></table></div></div>
+      <div class="stmt"><h3>Balance sheet</h3><div class="as" id="bsAsOf">As of today</div><div class="tablewrap"><table><tbody id="balanceSheet"></tbody></table></div></div>
+    </div>
+    <p class="hint" style="margin-top:16px">Contributions are counted when received. Unpaid bills are shown as liabilities. Prepared by the volunteer treasurer. Unaudited.</p>
+  </section>
+
+  <!-- STATS -->
+  <section class="sheet" data-panel="stats" role="tabpanel" aria-labelledby="tab-stats" hidden>
+    <h2>Community statistics</h2>
+    <p class="hint" style="margin-top:-6px;font-size:15px">Who is giving, how much, and where it goes. Individual names are never shown here.</p>
+    <div class="explain kpis">
+      <div><div class="k">Neighbors contributing</div><div class="v" id="kPeople">0</div></div>
+      <div><div class="k">Communities represented</div><div class="v" id="kAreas">0</div></div>
+      <div><div class="k">Typical contribution (median)</div><div class="v" id="kMedian">$0.00</div></div>
+    </div>
+    <div class="cards" style="margin-top:8px">
+      <div class="card flat"><h3>Money raised over time</h3><p class="hint">Running total received, against the current milestone.</p><div id="timeChart"></div></div>
+      <div class="card flat"><h3>Contribution sizes</h3><p class="hint">Neighbors by total given.</p><div id="sizeChart"></div></div>
+    </div>
+    <div class="cards" style="margin-top:16px">
+      <div class="card flat"><h3>How neighbors give</h3><p class="hint">Money received by method.</p><div class="hbars wrapnames" id="methodChart"></div></div>
+      <div class="card flat"><h3>Where the money goes</h3><p class="hint" id="spendNote">Spending by category.</p><div class="hbars wrapnames" id="spendChart"></div></div>
+    </div>
+    <h3 style="margin-top:22px">Month by month</h3>
+    <div class="tablewrap"><table><thead><tr><th>Month</th><th class="r">Contributions</th><th class="r">Received</th><th class="r">Spent</th><th class="r">Net</th></tr></thead><tbody id="monthRows"></tbody></table></div>
+  </section>
+
+  <!-- SHARES -->
+  <section class="sheet" data-panel="shares" role="tabpanel" aria-labelledby="tab-shares" hidden>
+    <h2>Refund shares</h2>
+    <p class="hint" style="margin-top:-4px;font-size:15px">If the fund closes with money left, it is returned in proportion to what each person contributed. Shares update live as contributions and expenses change.</p>
+    <div class="explain">
+      <div><div class="k">Total received</div><div class="v" id="sRec">$0.00</div></div>
+      <div><div class="k">Less expenses</div><div class="v" id="sExp">$0.00</div></div>
+      <div><div class="k">Available to return</div><div class="v" id="sPool">$0.00</div></div>
+    </div>
+    <p class="hint">Example: if one person gives $100 and expenses are $100, nothing remains. If a second person also gives $100 and expenses stay at $100, each would get $50 back.</p>
+    <div id="myShare"></div>
+    <div class="tablewrap"><table><thead><tr><th>Contributor</th><th>Neighborhood</th><th class="r">Contributed</th><th>Share of fund</th><th class="r">Would receive</th></tr></thead><tbody id="shareRows"></tbody></table></div>
+  </section>
+
+  <!-- ADMIN -->
+  <section class="sheet" data-panel="admin" role="tabpanel" aria-labelledby="tab-admin" hidden>
+    <div class="note" style="margin-bottom:18px"><strong>Team access.</strong> The treasurer and up to four helpers can record pledges and deposits here. To add someone, open the Share menu and give them <em>Edit</em> access; they will see this Treasurer tab. Everything they enter flows straight into the ledger, statements, refund shares and statistics, and is stamped with their name.</div>
+    <div class="grid2">
+      <div>
+        <h2>Record a pledge</h2>
+        <p class="hint" style="margin-top:-6px">For pledges made in person, by phone or on paper.</p>
+        <form id="plForm" novalidate>
+          <div class="field"><label for="plWho">Contributor</label><select id="plWho"></select></div>
+          <div id="plNew">
+            <div class="row">
+              <div class="field"><label for="plName">Full name</label><input id="plName" maxlength="80"></div>
+              <div class="field"><label for="plEmail">Email (optional)</label><input id="plEmail" type="email" maxlength="120"></div>
+            </div>
+            <div class="field" style="margin-top:12px"><label for="plAddr">Street address (private)</label><input id="plAddr" maxlength="160"></div>
+            <div class="row" style="margin-top:12px">
+              <div class="field"><label for="plArea">Neighborhood</label><input id="plArea" list="areas" maxlength="60"></div>
+              <div class="field"><label for="plShow">Show publicly as</label><select id="plShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="plAmt">Pledge amount</label><input id="plAmt" type="number" min="1" max="2000000" step="0.01" required></div>
+            <div class="field"><label for="plDate">Date pledged</label><input id="plDate" type="date" required></div>
+          </div>
+          <button class="btn" type="submit">Save pledge</button>
+          <div id="plMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+      <div>
+        <h2>Team activity</h2>
+        <p class="hint" style="margin-top:-6px">People who have recorded entries, and how many.</p>
+        <div class="tablewrap"><table><thead><tr><th>Person</th><th class="r">Pledges</th><th class="r">Deposits</th><th class="r">Expenses</th></tr></thead><tbody id="teamRows"></tbody></table></div>
+      </div>
+    </div>
+
+    <div class="grid2" style="margin-top:28px">
+      <div>
+        <h2>Record a deposit received</h2>
+        <form id="rForm" novalidate>
+          <div class="field"><label for="rWho">Contributor</label><select id="rWho"></select></div>
+          <div id="rNew" class="row">
+            <div class="field"><label for="rLabel">Public label</label><input id="rLabel" placeholder="e.g. Maria G." maxlength="60"></div>
+            <div class="field"><label for="rArea">Neighborhood</label><input id="rArea" list="areas" maxlength="60"></div>
+            <div class="field"><label for="rFull">Full name (private)</label><input id="rFull" maxlength="80"></div>
+            <div class="field"><label for="rEmail">Email (private)</label><input id="rEmail" type="email" maxlength="120"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="rAmt">Amount</label><input id="rAmt" type="number" min="0.01" step="0.01" required></div>
+            <div class="field"><label for="rDate">Date received</label><input id="rDate" type="date" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="rMethod">Method</label><select id="rMethod"><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Online payment</option><option>Other</option></select></div>
+            <div class="field"><label for="rNote">Reference (private note)</label><input id="rNote" placeholder="e.g. check #1042" maxlength="80"></div>
+          </div>
+          <div id="rOwed" class="hint" hidden></div>
+          <div class="field"><label for="rDep">Bank deposit slip or batch (private)</label><input id="rDep" maxlength="80" placeholder="e.g. DEP-2026-10-16"></div>
+          <button class="btn" type="submit">Save deposit</button>
+          <div id="rMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+      <div>
+        <h2>Record an expense</h2>
+        <form id="eForm" novalidate>
+          <div class="row">
+            <div class="field"><label for="eDate">Date</label><input id="eDate" type="date" required></div>
+            <div class="field"><label for="eAmt">Amount</label><input id="eAmt" type="number" min="0.01" step="0.01" required></div>
+          </div>
+          <div class="field"><label for="ePayee">Paid to</label><input id="ePayee" required placeholder="e.g. law firm name" maxlength="80"></div>
+          <div class="row">
+            <div class="field"><label for="eCat">Category</label><select id="eCat"><option>Legal fees</option><option>Expert reports</option><option>Filing and court fees</option><option>Public records</option><option>Printing and outreach</option><option>Platform and bank fees</option><option>Registration and filings</option><option>Land acquisition</option><option>Other</option></select></div>
+            <div class="field"><label for="eStatus">Status</label><select id="eStatus"><option value="paid">Paid</option><option value="unpaid">Unpaid bill</option></select></div>
+          </div>
+          <div class="field"><label for="eDesc">Description (public)</label><input id="eDesc" placeholder="e.g. Initial retainer" maxlength="120"></div>
+          <button class="btn sun" type="submit">Add expense</button>
+          <div id="eMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+    </div>
+
+    <h2 style="margin-top:28px">Fund settings</h2>
+    <form id="sForm" novalidate>
+      <div class="row">
+        <div class="field"><label for="sOrg">Fund name</label><input id="sOrg" maxlength="80"></div>
+        <div class="field"><label for="sPay">Secure payment link</label><input id="sPay" type="url" placeholder="https://..."><span class="hint">Your GoFundMe, Zeffy, PayPal or Stripe payment page.</span></div>
+      </div>
+      <div class="field"><label for="sMs">Milestones (one per line: amount | title | description)</label>
+        <textarea id="sMs" spellcheck="false"></textarea>
+        <span class="hint">The last line is the full target. The scale moves to the next milestone automatically.</span></div>
+      <div><button class="btn ghost" type="submit">Save settings</button></div>
+      <div id="sMsg" class="note" hidden role="status"></div>
+    </form>
+
+    <h2 style="margin-top:28px">Contributor contacts <span class="hint" style="font:400 14px var(--body)">(visible only to you and editors)</span></h2>
+    <div class="tablewrap"><table><thead><tr><th>Name</th><th>Email</th><th>Address</th><th>Neighborhood</th><th class="r">Pledged</th><th class="r">Received</th></tr></thead><tbody id="contactRows"></tbody></table></div>
+
+    <h2 style="margin-top:28px">Manage entries</h2>
+    <div class="tablewrap"><table><thead><tr><th>Type</th><th>Date</th><th>Detail</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="manageRows"></tbody></table></div>
+  </section>
+</div>
+</main>
+
+<footer class="gutter"><div class="wrap">Prepared by volunteer residents. Contributions are not tax-deductible unless and until the organization receives 501(c)(3) recognition or uses a fiscal sponsor. Statements are unaudited. If the fund closes, any remaining balance is returned in proportion to contributions unless contributors agree otherwise.</div></footer>
+<div class="tip" id="tip" hidden></div>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => (n < 0 ? "-$" : "$") + Math.abs(n).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+  const fmt0 = (n) => "$" + Math.round(n).toLocaleString("en-US");
+  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const today = () => new Date().toISOString().slice(0, 10);
+  const num = (v) => { const n = Number(v); return Number.isFinite(n) ? Math.round(n * 100) / 100 : 0; };
+
+  const DEFAULT_MS = [
+    {amount: 10000, title: "Retain a land use attorney", desc: "The minimum needed to challenge the eligibility decision."},
+    {amount: 1700000, title: "Match the land's A-1 value", desc: "Enough to make a serious offer for the property."},
+    {amount: 2000000, title: "Buy the land and open a community park", desc: "Purchase, closing costs and first-year park setup."},
+  ];
+  const S = {settings: {}, pledges: [], receipts: [], expenses: [], contacts: [], uid: null, admin: false, db: null};
+  const milestones = () => {
+    const m = Array.isArray(S.settings.milestones) && S.settings.milestones.length ? S.settings.milestones : DEFAULT_MS;
+    return m.map((x) => ({amount: num(x.amount), title: String(x.title || ""), desc: String(x.desc || "")})).filter((x) => x.amount > 0).sort((a, b) => a.amount - b.amount);
+  };
+
+  // Tabs
+  const tabs = [...document.querySelectorAll("nav.tabs button")];
+  function show(name) {
+    tabs.forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === name)));
+    document.querySelectorAll("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== name; });
+    try { localStorage.setItem("fundTab", name); } catch (e) {}
+  }
+  tabs.forEach((b) => b.addEventListener("click", () => show(b.dataset.tab)));
+  $("ctaPledge").addEventListener("click", (e) => { e.preventDefault(); show("pledge"); $("tab-pledge").scrollIntoView({behavior: "smooth", block: "start"}); });
+  $("ctaBooks").addEventListener("click", (e) => { e.preventDefault(); show("statements"); $("tab-statements").scrollIntoView({behavior: "smooth", block: "start"}); });
+
+  document.querySelectorAll(".amounts button").forEach((b) => b.addEventListener("click", () => {
+    document.querySelectorAll(".amounts button").forEach((x) => x.setAttribute("aria-pressed", "false"));
+    b.setAttribute("aria-pressed", "true"); $("pAmt").value = b.dataset.amt;
+  }));
+  $("pAmt").addEventListener("input", () => document.querySelectorAll(".amounts button").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.amt === $("pAmt").value))));
+
+  function note(el, text, kind) { el.textContent = text; el.className = "note" + (kind ? " " + kind : ""); el.hidden = !text; }
+  function publicLabel(full, mode) {
+    if (mode === "anon") return "Anonymous neighbor";
+    const parts = String(full).trim().split(/\s+/);
+    if (!parts[0]) return "Neighbor";
+    return parts[0].charAt(0).toUpperCase() + parts[0].slice(1) + (parts.length > 1 ? " " + parts[parts.length - 1][0].toUpperCase() + "." : "");
+  }
+
+  // ---------- Calculations ----------
+  function calc() {
+    const rec = S.receipts.reduce((a, r) => a + num(r.amount), 0);
+    const paid = S.expenses.filter((e) => e.status !== "unpaid").reduce((a, e) => a + num(e.amount), 0);
+    const unpaid = S.expenses.filter((e) => e.status === "unpaid").reduce((a, e) => a + num(e.amount), 0);
+    const exp = paid + unpaid;
+    const people = new Map();
+    for (const p of S.pledges) {
+      const pledged = (p.items || []).reduce((a, i) => a + num(i.amount), 0);
+      people.set(p.id, {cid: p.id, label: p.label || "Neighbor", area: p.area || "", pledged, received: 0});
+    }
+    for (const r of S.receipts) {
+      const key = r.cid || ("r:" + r.id);
+      if (!people.has(key)) people.set(key, {cid: key, label: r.label || "Neighbor", area: r.area || "", pledged: 0, received: 0});
+      people.get(key).received += num(r.amount);
+    }
+    let outstanding = 0;
+    for (const p of people.values()) { p.outstanding = Math.max(0, p.pledged - p.received); outstanding += p.outstanding; }
+    const pool = Math.max(0, rec - exp);
+    for (const p of people.values()) { p.share = rec > 0 ? p.received / rec : 0; p.refund = Math.round(pool * p.share * 100) / 100; }
+    const areas = new Map();
+    for (const p of people.values()) {
+      const k = (p.area || "Not given").trim() || "Not given";
+      const a = areas.get(k) || {area: k, received: 0, outstanding: 0, n: 0};
+      a.received += p.received; a.outstanding += p.outstanding; a.n += (p.received > 0 || p.pledged > 0) ? 1 : 0;
+      areas.set(k, a);
+    }
+    return {rec, paid, unpaid, exp, cash: rec - paid, outstanding, pool, people: [...people.values()], areas: [...areas.values()].filter((a) => a.received + a.outstanding > 0).sort((a, b) => (b.received + b.outstanding) - (a.received + a.outstanding))};
+  }
+
+  // ---------- Milestone scale ----------
+  function renderScale(rec) {
+    const ms = milestones();
+    const top = ms[ms.length - 1]?.amount || 2000000;
+    let idx = ms.findIndex((m) => rec < m.amount); if (idx === -1) idx = ms.length - 1;
+    const cur = ms[idx]; const prev = idx > 0 ? ms[idx - 1].amount : 0;
+    const allDone = rec >= top;
+    const pct = allDone ? 100 : Math.max(0, Math.min(100, ((rec - prev) / (cur.amount - prev)) * 100));
+    $("stageLabel").textContent = allDone ? "Full target reached" : `Milestone ${idx + 1} of ${ms.length}: ${cur.title}`;
+    $("stageNums").textContent = `${fmt0(rec)} of ${fmt0(cur.amount)}`;
+    $("stagePct").textContent = allDone ? "100%" : `${pct.toFixed(pct < 10 ? 1 : 0)}% of this step`;
+    $("stageBar").querySelector("span").style.width = pct.toFixed(2) + "%";
+    $("stageBar").setAttribute("aria-valuenow", pct.toFixed(0));
+    $("stageBar").setAttribute("aria-label", `${pct.toFixed(0)}% toward ${cur.title}`);
+    $("ladder").innerHTML = ms.map((m, i) => {
+      const done = rec >= m.amount; const now = !done && i === idx;
+      const mp = done ? 100 : now ? pct : 0;
+      return `<li class="${done ? "done" : now ? "now" : ""}"><span class="dot" aria-hidden="true">${done ? "✓" : i + 1}</span><div><div class="t">${esc(m.title)}</div><div class="d">${esc(m.desc)}</div>${now ? `<div class="mini"><span style="width:${mp.toFixed(2)}%"></span></div>` : ""}</div><div class="a">${fmt0(m.amount)}<div class="d">${done ? "Reached" : now ? "In progress" : "Next"}</div></div></li>`;
+    }).join("");
+    $("trackFill").style.width = Math.min(100, (rec / top) * 100).toFixed(3) + "%";
+    $("trackTicks").innerHTML = ms.slice(0, -1).map((m) => `<span class="tick" style="left:${((m.amount / top) * 100).toFixed(2)}%"></span>`).join("");
+    $("trackMax").textContent = fmt0(top) + " full target";
+  }
+
+  // ---------- Neighborhood chart ----------
+  function renderAreas(areas) {
+    const max = Math.max(1, ...areas.map((a) => a.received + a.outstanding));
+    $("nbChart").innerHTML = areas.length ? areas.slice(0, 8).map((a, i) => {
+      const w1 = (a.received / max) * 100, w2 = (a.outstanding / max) * 100;
+      return `<div class="hb" data-i="${i}"><div class="name" title="${esc(a.area)}">${esc(a.area)}</div><div class="lane"><div class="bars" style="width:calc((100% - 76px) * ${((w1 + w2) / 100).toFixed(4)})">${a.received > 0 ? `<span class="seg rec" style="flex:${a.received}"></span>` : ""}${a.outstanding > 0 ? `<span class="seg pl" style="flex:${a.outstanding}"></span>` : ""}</div><span class="val">${fmt0(a.received + a.outstanding)}</span></div><span class="hit"></span></div>`;
+    }).join("") : `<p class="empty">Neighborhood totals appear as pledges come in.</p>`;
+    $("nbTable").innerHTML = areas.length ? areas.map((a) => `<tr><td>${esc(a.area)}</td><td class="r num">${a.n}</td><td class="r num">${fmt(a.received)}</td><td class="r num">${fmt(a.outstanding)}</td></tr>`).join("") : `<tr><td colspan="4" class="empty">No data yet.</td></tr>`;
+    S._areas = areas;
+  }
+  const tip = $("tip");
+  $("nbChart").addEventListener("pointermove", (e) => {
+    const row = e.target.closest(".hb"); if (!row) { tip.hidden = true; return; }
+    const a = S._areas[Number(row.dataset.i)]; if (!a) return;
+    tip.innerHTML = `<strong>${esc(a.area)}</strong><br>Received <span class="num">${fmt(a.received)}</span><br>Pledged, not yet received <span class="num">${fmt(a.outstanding)}</span><br>${a.n} contributor${a.n === 1 ? "" : "s"}`;
+    tip.hidden = false;
+    const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+    tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
+  });
+  $("nbChart").addEventListener("pointerleave", () => { tip.hidden = true; });
+
+  // ---------- Statistics ----------
+  const NS = "http://www.w3.org/2000/svg";
+  const sv = (tag, attrs = {}, ...kids) => { const el = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(attrs)) if (v != null) el.setAttribute(k, String(v)); for (const k of kids.flat()) if (k != null) el.append(k instanceof Node ? k : document.createTextNode(String(k))); return el; };
+  const compact = (n) => n >= 1e6 ? "$" + (n / 1e6).toFixed(n % 1e6 ? 1 : 0) + "M" : n >= 1000 ? "$" + (n / 1000).toFixed(n % 1000 ? 1 : 0) + "K" : "$" + Math.round(n);
+  const niceMax = (v) => { if (v <= 0) return 100; const p = 10 ** Math.floor(Math.log10(v)); return [1, 2, 2.5, 5, 10].map((m) => m * p).find((x) => x >= v); };
+  const median = (a) => { if (!a.length) return 0; const b = [...a].sort((x, y) => x - y), m = b.length >> 1; return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; };
+  const tipShow = (html, x, y) => { tip.innerHTML = html; tip.hidden = false; tip.style.left = Math.min(x + 14, innerWidth - tip.offsetWidth - 8) + "px"; tip.style.top = (y + 14) + "px"; };
+  function barList(el, rows, emptyText) {
+    const max = Math.max(1, ...rows.map((r) => r.value));
+    el.innerHTML = rows.length ? rows.map((r) => `<div class="hb"><div class="name">${esc(r.label)}</div><div class="lane"><div class="bars" style="width:calc((100% - 96px) * ${(r.value / max).toFixed(4)})"><span class="seg rec" style="flex:1"></span></div><span class="val">${compact(r.value)} · ${r.pct}%</span></div></div>`).join("") : `<p class="empty">${esc(emptyText)}</p>`;
+  }
+  function timeChart(el, receipts, milestone) {
+    const byDay = new Map(); receipts.forEach((r) => byDay.set(r.date, (byDay.get(r.date) || 0) + num(r.amount)));
+    const days = [...byDay.keys()].filter(Boolean).sort();
+    if (!days.length) { el.innerHTML = `<p class="empty">The running total appears once money is received.</p>`; return; }
+    let run = 0; const pts = days.map((d) => ({d, v: (run += byDay.get(d))}));
+    if (pts.length === 1) pts.unshift({d: pts[0].d, v: 0});
+    const W = 560, H = 240, L = 52, R = 14, T = 16, B = 30;
+    const t0 = Date.parse(pts[0].d), t1 = Math.max(Date.parse(pts.at(-1).d), t0 + 86400000);
+    const target = milestone && milestone.amount <= Math.max(run * 4, 1) ? milestone : null;
+    const yMax = niceMax(Math.max(run, target ? target.amount : 0) * 1.05);
+    const x = (d) => L + ((Date.parse(d) - t0) / (t1 - t0)) * (W - L - R), y = (v) => T + (1 - v / yMax) * (H - T - B);
+    const line = pts.map((p, i) => `${i ? "L" : "M"}${x(p.d).toFixed(1)} ${y(p.v).toFixed(1)}`).join(" ");
+    const fmtD = (d) => new Date(d + "T12:00:00").toLocaleDateString("en-US", {month: "short", day: "numeric"});
+    const svg = sv("svg", {viewBox: `0 0 ${W} ${H}`, class: "svgchart", role: "img", "aria-label": `Running total rises to ${fmt0(run)}`},
+      [0, .25, .5, .75, 1].map((f) => f * yMax).map((v) => sv("g", {}, sv("line", {x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid"}), sv("text", {x: L - 8, y: y(v) + 4, "text-anchor": "end", class: "axis"}, compact(v)))),
+      target ? sv("g", {}, sv("line", {x1: L, x2: W - R, y1: y(target.amount), y2: y(target.amount), class: "goal"}), sv("text", {x: W - R, y: y(target.amount) - 6, "text-anchor": "end", class: "axis"}, `Goal: ${target.title} ${compact(target.amount)}`)) : null,
+      sv("path", {d: `${line} L${x(pts.at(-1).d).toFixed(1)} ${y(0)} L${x(pts[0].d).toFixed(1)} ${y(0)} Z`, class: "wash"}), sv("path", {d: line, class: "line"}),
+      sv("circle", {cx: x(pts.at(-1).d), cy: y(run), r: 5, class: "dot"}), sv("text", {x: Math.min(x(pts.at(-1).d), W - R - 4), y: y(run) - 10, "text-anchor": "end", class: "lab"}, compact(run)),
+      sv("text", {x: L, y: H - 8, class: "axis"}, fmtD(pts[0].d)), sv("text", {x: W - R, y: H - 8, "text-anchor": "end", class: "axis"}, fmtD(pts.at(-1).d)),
+      sv("rect", {x: L, y: T, width: W - L - R, height: H - T - B, class: "hit"}));
+    const hit = svg.lastChild;
+    hit.addEventListener("pointermove", (e) => { const box = svg.getBoundingClientRect(), px = ((e.clientX - box.left) / box.width) * W; let best = pts[0]; for (const p of pts) if (Math.abs(x(p.d) - px) < Math.abs(x(best.d) - px)) best = p; tipShow(`<strong>${esc(fmtD(best.d))}</strong><br>Running total <span class="num">${fmt(best.v)}</span>`, e.clientX, e.clientY); });
+    hit.addEventListener("pointerleave", () => { tip.hidden = true; });
+    el.replaceChildren(svg);
+  }
+  function sizeChart(el, people) {
+    const buckets = [["Under $50", 0, 50], ["$50–99", 50, 100], ["$100–249", 100, 250], ["$250–499", 250, 500], ["$500–999", 500, 1000], ["$1,000+", 1000, Infinity]];
+    const given = people.map((p) => p.received).filter((v) => v > 0);
+    if (!given.length) { el.innerHTML = `<p class="empty">Contribution sizes appear once money is received.</p>`; return; }
+    const counts = buckets.map(([l, a, b]) => ({l, n: given.filter((v) => v >= a && v < b).length}));
+    const W = 440, H = 220, L = 30, R = 6, T = 22, B = 34, max = Math.max(1, ...counts.map((c) => c.n));
+    const yMax = Math.max(2, Math.ceil(max * 1.15)), bw = (W - L - R) / counts.length, cw = Math.min(24, bw * .6), y = (v) => T + (1 - v / yMax) * (H - T - B);
+    const svg = sv("svg", {viewBox: `0 0 ${W} ${H}`, class: "svgchart", role: "img", "aria-label": counts.map((c) => `${c.l}: ${c.n}`).join(", ")},
+      [0, Math.round(yMax / 2), yMax].map((v) => sv("g", {}, sv("line", {x1: L, x2: W - R, y1: y(v), y2: y(v), class: "grid"}), sv("text", {x: L - 6, y: y(v) + 4, "text-anchor": "end", class: "axis"}, v))),
+      counts.map((c, i) => { const cx = L + bw * i + bw / 2, top = y(c.n), base = y(0), hg = Math.max(0, base - top), r = Math.min(4, hg);
+        const d = hg > 0 ? `M${cx - cw / 2} ${base} V${top + r} Q${cx - cw / 2} ${top} ${cx - cw / 2 + r} ${top} H${cx + cw / 2 - r} Q${cx + cw / 2} ${top} ${cx + cw / 2} ${top + r} V${base} Z` : "";
+        return sv("g", {}, d ? sv("path", {d, class: "bar"}) : null, c.n ? sv("text", {x: cx, y: top - 6, "text-anchor": "middle", class: "lab"}, c.n) : null, sv("text", {x: cx, y: H - 12, "text-anchor": "middle", class: "axis"}, c.l)); }));
+    el.replaceChildren(svg);
+  }
+  function renderStats(c) {
+    const givers = c.people.filter((p) => p.received > 0 || p.pledged > 0);
+    $("kPeople").textContent = String(givers.length);
+    $("kAreas").textContent = String(c.areas.filter((a) => a.area !== "Not given").length);
+    $("kMedian").textContent = fmt(median(c.people.map((p) => p.received).filter((v) => v > 0)));
+    const ms = milestones();
+    timeChart($("timeChart"), S.receipts, ms.find((m) => c.rec < m.amount) || ms.at(-1));
+    sizeChart($("sizeChart"), c.people);
+    const byM = {}; S.receipts.forEach((r) => { byM[r.method || "Other"] = (byM[r.method || "Other"] || 0) + num(r.amount); });
+    barList($("methodChart"), Object.entries(byM).sort((a, b) => b[1] - a[1]).map(([label, value]) => ({label, value, pct: c.rec ? Math.round(value / c.rec * 100) : 0})), "Shown once money is received.");
+    const byC = {}; S.expenses.forEach((e) => { byC[e.category || "Other"] = (byC[e.category || "Other"] || 0) + num(e.amount); });
+    barList($("spendChart"), Object.entries(byC).sort((a, b) => b[1] - a[1]).map(([label, value]) => ({label, value, pct: c.exp ? Math.round(value / c.exp * 100) : 0})), "No money has been spent yet.");
+    const legal = (byC["Legal fees"] || 0) + (byC["Expert reports"] || 0) + (byC["Filing and court fees"] || 0);
+    $("spendNote").textContent = !c.exp ? "Spending by category." : (legal > 0 ? `${Math.round(legal / c.exp * 100)}% of spending has gone directly to the legal case. ` : "No legal fees paid yet. ") + `${fmt(c.exp)} spent of ${fmt(c.rec)} received.`;
+    const months = new Map(), mk = (d) => String(d || "").slice(0, 7);
+    S.receipts.forEach((r) => { const k = mk(r.date), x = months.get(k) || {n: 0, rec: 0, exp: 0}; x.n++; x.rec += num(r.amount); months.set(k, x); });
+    S.expenses.forEach((e) => { const k = mk(e.date), x = months.get(k) || {n: 0, rec: 0, exp: 0}; x.exp += num(e.amount); months.set(k, x); });
+    const keys = [...months.keys()].filter(Boolean).sort().reverse();
+    $("monthRows").innerHTML = keys.length ? keys.map((k) => { const x = months.get(k); return `<tr><td>${esc(new Date(k + "-15T12:00:00").toLocaleDateString("en-US", {month: "long", year: "numeric"}))}</td><td class="r num">${x.n}</td><td class="r num">${fmt(x.rec)}</td><td class="r num">${fmt(x.exp)}</td><td class="r num">${fmt(x.rec - x.exp)}</td></tr>`; }).join("") : `<tr><td colspan="5" class="empty">No activity yet.</td></tr>`;
+  }
+
+  // ---------- Rendering ----------
+  function render() {
+    const c = calc();
+    const st = S.settings || {};
+    $("orgName").textContent = st.orgName || "Prospect Road Community Fund";
+    $("tCash").textContent = fmt(c.cash); $("tRec").textContent = fmt(c.rec); $("tOut").textContent = fmt(c.outstanding); $("tExp").textContent = fmt(c.exp);
+    renderScale(c.rec);
+    renderAreas(c.areas);
+    renderStats(c);
+
+    const url = st.paymentUrl && /^https:\/\//i.test(st.paymentUrl) ? st.paymentUrl : "";
+    $("payBox").innerHTML = url
+      ? `<a class="btn sun" href="${esc(url)}" target="_blank" rel="noopener noreferrer">Pay securely online</a><p class="hint" style="margin-top:8px">Opens the fund's payment page in a new tab. Use the same name and email as your pledge so the treasurer can match it.</p>`
+      : `<div class="note warn">The secure payment link is being set up. Record your pledge now and you will be able to pay as soon as it is ready.</div>`;
+
+    const recent = [...S.receipts].sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
+    $("recentList").innerHTML = recent.length
+      ? `<div class="tablewrap"><table><tbody>${recent.map((r) => `<tr><td>${esc(r.label)}<div class="hint">${esc(r.area)}</div></td><td class="r num">${fmt(num(r.amount))}</td></tr>`).join("")}</tbody></table></div>`
+      : `<p class="empty">No contributions recorded yet. Be the first.</p>`;
+
+    const inc = [...S.receipts].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("incomeRows").innerHTML = inc.length ? inc.map((r) => `<tr><td class="num">${esc(r.date)}</td><td>${esc(r.label)}</td><td>${esc(r.area)}</td><td>${esc(r.method)}</td><td class="r num">${fmt(num(r.amount))}</td></tr>`).join("") + `<tr class="total"><td colspan="4">Total received</td><td class="r num">${fmt(c.rec)}</td></tr>`
+      : `<tr><td colspan="5" class="empty">No contributions received yet.</td></tr>`;
+    const outs = c.people.filter((p) => p.outstanding > 0);
+    $("pledgeRows").innerHTML = outs.length ? outs.map((p) => `<tr><td>${esc(p.label)}</td><td>${esc(p.area)}</td><td class="r num">${fmt(p.pledged)}</td><td class="r num">${fmt(p.received)}</td><td class="r num"><span class="pill pend">${fmt(p.outstanding)}</span></td></tr>`).join("")
+      : `<tr><td colspan="5" class="empty">No outstanding pledges.</td></tr>`;
+    const ex = [...S.expenses].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("expenseRows").innerHTML = ex.length ? ex.map((e) => `<tr><td class="num">${esc(e.date)}</td><td>${esc(e.payee)}</td><td>${esc(e.category)}</td><td>${esc(e.description)}</td><td>${e.status === "unpaid" ? '<span class="pill due">Unpaid</span>' : '<span class="pill ok">Paid</span>'}</td><td class="r num">${fmt(num(e.amount))}</td></tr>`).join("") + `<tr class="total"><td colspan="5">Total expenses</td><td class="r num">${fmt(c.exp)}</td></tr>`
+      : `<tr><td colspan="6" class="empty">No expenses recorded yet.</td></tr>`;
+
+    const byMethod = {}; S.receipts.forEach((r) => { byMethod[r.method || "Other"] = (byMethod[r.method || "Other"] || 0) + num(r.amount); });
+    const byCat = {}; S.expenses.forEach((e) => { byCat[e.category || "Other"] = (byCat[e.category || "Other"] || 0) + num(e.amount); });
+    const line = (l, v, cls) => `<tr${cls ? ` class="${cls}"` : ""}><td>${esc(l)}</td><td class="r num">${fmt(v)}</td></tr>`;
+    const firstDate = [...S.receipts, ...S.expenses].map((x) => x.date).filter(Boolean).sort()[0];
+    $("isAsOf").textContent = firstDate ? `From ${firstDate} to ${today()}` : "From inception to today";
+    $("bsAsOf").textContent = "As of " + today();
+    $("incomeStmt").innerHTML =
+      `<tr class="sub"><td colspan="2">Revenue</td></tr>` +
+      (Object.keys(byMethod).length ? Object.entries(byMethod).map(([k, v]) => line("Contributions: " + k, v)).join("") : line("Contributions", 0)) +
+      line("Total revenue", c.rec, "sub") +
+      `<tr class="sub"><td colspan="2">Expenses</td></tr>` +
+      (Object.keys(byCat).length ? Object.entries(byCat).map(([k, v]) => line(k, v)).join("") : line("None recorded", 0)) +
+      line("Total expenses", c.exp, "sub") +
+      line(c.rec - c.exp >= 0 ? "Net surplus" : "Net deficit", c.rec - c.exp, "total");
+    $("balanceSheet").innerHTML =
+      `<tr class="sub"><td colspan="2">Assets</td></tr>` + line("Cash", c.cash) + line("Total assets", c.cash, "sub") +
+      `<tr class="sub"><td colspan="2">Liabilities</td></tr>` + line("Unpaid bills", c.unpaid) + line("Total liabilities", c.unpaid, "sub") +
+      line("Net assets", c.cash - c.unpaid, "total") +
+      `<tr><td colspan="2" class="hint" style="border:0;padding-top:12px">Outstanding pledges of ${esc(fmt(c.outstanding))} are not counted as assets until received.</td></tr>`;
+
+    $("sRec").textContent = fmt(c.rec); $("sExp").textContent = fmt(c.exp); $("sPool").textContent = fmt(c.pool);
+    const sh = c.people.filter((p) => p.received > 0).sort((a, b) => b.received - a.received);
+    $("shareRows").innerHTML = sh.length ? sh.map((p) => `<tr${p.cid === S.uid ? ' style="background:var(--sun-soft)"' : ""}><td>${esc(p.label)}${p.cid === S.uid ? ' <span class="pill pend">You</span>' : ""}</td><td>${esc(p.area)}</td><td class="r num">${fmt(p.received)}</td><td><div style="display:flex;gap:8px;align-items:center"><div class="sharebar" style="flex:1"><span style="width:${(p.share * 100).toFixed(2)}%"></span></div><span class="num" style="font-size:13px">${(p.share * 100).toFixed(1)}%</span></div></td><td class="r num">${fmt(p.refund)}</td></tr>`).join("")
+      : `<tr><td colspan="5" class="empty">Shares appear here once contributions are received.</td></tr>`;
+    const mine = c.people.find((p) => p.cid === S.uid);
+    $("myShare").innerHTML = mine && mine.received > 0
+      ? `<div class="note" style="margin:12px 0">You have contributed <strong class="num">${fmt(mine.received)}</strong>, which is <strong>${(mine.share * 100).toFixed(1)}%</strong> of the fund. If the fund closed today, you would receive <strong class="num">${fmt(mine.refund)}</strong>.</div>` : "";
+
+    if (S.admin) renderAdmin(c);
+  }
+
+  function renderAdmin(c) {
+    const byCid0 = new Map(c.people.map((p) => [p.cid, p]));
+    const optHtml = S.pledges.map((p) => { const x = byCid0.get(p.id) || {}; return `<option value="${esc(p.id)}">${esc(p.label)} · ${esc(p.area)}${x.outstanding > 0 ? " · owes " + fmt(x.outstanding) : ""}</option>`; }).join("");
+    for (const [id, wrap, label] of [["rWho", "rNew", "New or anonymous contributor"], ["plWho", "plNew", "New contributor"]]) {
+      const sel = $(id), cur = sel.value;
+      sel.innerHTML = `<option value="__new">${label}</option>` + optHtml;
+      if ([...sel.options].some((o) => o.value === cur)) sel.value = cur;
+      $(wrap).hidden = sel.value !== "__new";
+    }
+    S._byCid = byCid0; showOwed();
+    const act = new Map();
+    const bump = (by, k) => { if (!by) return; const a = act.get(by) || {pl: 0, dep: 0, exp: 0}; a[k]++; act.set(by, a); };
+    S.pledges.forEach((p) => (p.items || []).forEach((i) => bump(i.by, "pl")));
+    S.receipts.forEach((r) => bump(r.by, "dep")); S.expenses.forEach((e) => bump(e.by, "exp"));
+    const teamIds = [...act.keys()];
+    $("teamRows").innerHTML = teamIds.length ? teamIds.map((id) => { const a = act.get(id); return `<tr><td data-by="${esc(id)}">…</td><td class="r num">${a.pl}</td><td class="r num">${a.dep}</td><td class="r num">${a.exp}</td></tr>`; }).join("")
+      : `<tr><td colspan="4" class="empty">No staff entries yet.</td></tr>`;
+    const st = S.settings || {};
+    if (!$("sForm").dataset.touched) {
+      $("sOrg").value = st.orgName || "Prospect Road Community Fund";
+      $("sPay").value = st.paymentUrl || "";
+      $("sMs").value = milestones().map((m) => `${m.amount} | ${m.title} | ${m.desc}`).join("\n");
+    }
+    const byCid = new Map(c.people.map((p) => [p.cid, p]));
+    $("contactRows").innerHTML = S.contacts.length ? S.contacts.map((k) => { const p = byCid.get(k.id) || {pledged: 0, received: 0}; return `<tr><td>${esc(k.name)}</td><td>${esc(k.email)}</td><td>${esc(k.address)}</td><td>${esc(k.area)}</td><td class="r num">${fmt(p.pledged)}</td><td class="r num">${fmt(p.received)}</td></tr>`; }).join("")
+      : `<tr><td colspan="6" class="empty">No contributor contacts yet.</td></tr>`;
+    const rows = [
+      ...S.receipts.map((r) => ({t: "Deposit", path: "ledger/main/receipts/" + r.id, date: r.date, d: `${r.label} · ${r.method}${r.note ? " · " + r.note : ""}${r.depositRef ? " · slip " + r.depositRef : ""}`, a: num(r.amount), by: r.by})),
+      ...S.expenses.map((e) => ({t: "Expense", path: "ledger/main/expenses/" + e.id, date: e.date, d: `${e.payee} · ${e.category}`, a: -num(e.amount), e, by: e.by})),
+    ].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+    $("manageRows").innerHTML = rows.length ? rows.map((r) => `<tr><td>${r.t}</td><td class="num">${esc(r.date)}</td><td>${esc(r.d)}</td><td class="r num">${fmt(r.a)}</td><td class="hint" ${r.by ? `data-by="${esc(r.by)}"` : ""}>${r.by ? "…" : "—"}</td><td class="r"><span class="confirm">${r.e && r.e.status === "unpaid" ? `<button class="btn small ghost" data-paid="${esc(r.path)}">Mark paid</button>` : ""}<button class="btn small ghost" data-del="${esc(r.path)}">Delete</button></span></td></tr>`).join("")
+      : `<tr><td colspan="6" class="empty">Nothing to manage yet.</td></tr>`;
+    resolveNames();
+  }
+
+  // Names are resolved from ids every render (never stored).
+  async function resolveNames() {
+    const cells = [...document.querySelectorAll("[data-by]")];
+    if (!cells.length) return;
+    if (!S.user) { cells.forEach((el) => { el.textContent = "Team member"; }); return; }
+    const ids = [...new Set(cells.map((el) => el.dataset.by))];
+    const ps = await S.user.profiles(ids);
+    cells.forEach((el) => { const p = ps[el.dataset.by]; el.textContent = (p && p.name) || (el.dataset.by === S.uid ? "You" : "Team member"); });
+  }
+
+  function showOwed() {
+    const el = $("rOwed"), x = S._byCid && S._byCid.get($("rWho").value);
+    if (!x) { el.hidden = true; return; }
+    el.textContent = x.outstanding > 0 ? `${x.label} has pledged ${fmt(x.pledged)} and paid ${fmt(x.received)}. Still owed: ${fmt(x.outstanding)}.` : `${x.label} has no unpaid pledge. This deposit will count as an extra gift.`;
+    el.hidden = false;
+    if (x.outstanding > 0 && !$("rAmt").value) $("rAmt").value = x.outstanding.toFixed(2);
+  }
+
+  document.addEventListener("click", async (ev) => {
+    const del = ev.target.closest("[data-del]"); const paid = ev.target.closest("[data-paid]"); const yes = ev.target.closest("[data-yes]"); const no = ev.target.closest("[data-no]");
+    if (del) { del.parentElement.innerHTML = `<span class="hint">Delete?</span><button class="btn small danger" data-yes="${esc(del.dataset.del)}">Yes</button><button class="btn small ghost" data-no>No</button>`; }
+    else if (no) { render(); }
+    else if (yes) { try { await S.db.doc(yes.dataset.yes).delete(); } catch (e) { flash("Could not delete that entry. Please try again."); } }
+    else if (paid) { try { await S.db.doc(paid.dataset.paid).update({status: "paid", paidOn: today()}); } catch (e) { flash("Could not update that bill. Please try again."); } }
+  });
+  function flash(t) { note($("status"), t, "err"); setTimeout(() => { $("status").hidden = true; }, 6000); }
+
+  // ---------- Forms ----------
+  $("pledgeForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const name = $("pName").value.trim(), email = $("pEmail").value.trim(), address = $("pAddr").value.trim(), area = $("pArea").value.trim(), amount = num($("pAmt").value);
+    if (!name || !email || !address || !area) return note($("pMsg"), "Please fill in your name, email, street address and neighborhood.", "err");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return note($("pMsg"), "Please enter a valid email address.", "err");
+    if (!(amount >= 1 && amount <= 2000000)) return note($("pMsg"), "Please enter a pledge between $1 and $2,000,000.", "err");
+    if (!S.db || !S.uid) return note($("pMsg"), "Sign in to Claude to record a pledge here, or use the payment link to give directly.", "warn");
+    $("pSubmit").disabled = true;
+    try {
+      await S.db.doc("contacts/" + S.uid).set({name, email, address, area, updatedAt: new Date().toISOString()});
+      const existing = S.pledges.find((p) => p.id === S.uid);
+      const items = [...((existing && existing.items) || []), {amount, date: today()}].slice(-50);
+      await S.db.doc("pledges/" + S.uid).set({label: publicLabel(name, $("pShow").value), area, items, updatedAt: new Date().toISOString()});
+      note($("pMsg"), `Thank you. Your pledge of ${fmt(amount)} is recorded. ${S.settings.paymentUrl ? "Use “Pay securely online” to complete it." : "You can pay as soon as the payment link is ready."}`, "");
+      $("pAmt").value = "100";
+    } catch (e) {
+      note($("pMsg"), e && e.code === "invalid_argument" ? "Your access level can't record pledges on this page. Please use the payment link, or ask the treasurer to record it for you." : "Something went wrong saving your pledge. Please try again.", "err");
+    } finally { $("pSubmit").disabled = false; }
+  });
+
+  $("rWho").addEventListener("change", () => { $("rNew").hidden = $("rWho").value !== "__new"; $("rAmt").value = ""; showOwed(); });
+  $("plWho").addEventListener("change", () => { $("plNew").hidden = $("plWho").value !== "__new"; });
+
+  $("plForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const msg = $("plMsg"), amount = num($("plAmt").value), date = $("plDate").value, who = $("plWho").value;
+    if (!(amount >= 1 && amount <= 2000000)) return note(msg, "Enter a pledge between $1 and $2,000,000.", "err");
+    if (!date) return note(msg, "Enter the date pledged.", "err");
+    try {
+      const item = {amount, date, by: S.uid, source: "staff"};
+      if (who === "__new") {
+        const name = $("plName").value.trim(), area = $("plArea").value.trim(), email = $("plEmail").value.trim();
+        if (!name || !area) return note(msg, "Enter the person's name and neighborhood.", "err");
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return note(msg, "Enter a valid email, or leave it blank.", "err");
+        const id = S.db.collection("pledges").doc().id;
+        await S.db.doc("contacts/" + id).set({name, email, address: $("plAddr").value.trim(), area, offline: true, by: S.uid, updatedAt: new Date().toISOString()});
+        await S.db.doc("pledges/" + id).set({label: publicLabel(name, $("plShow").value), area, items: [item], updatedAt: new Date().toISOString()});
+      } else {
+        const p = S.pledges.find((x) => x.id === who);
+        await S.db.doc("pledges/" + who).update({items: [...((p && p.items) || []), item].slice(-50), updatedAt: new Date().toISOString()});
+      }
+      note(msg, `Pledge of ${fmt(amount)} saved. It now shows in the ledger, statistics and reports.`, "");
+      ["plAmt", "plName", "plEmail", "plAddr", "plArea"].forEach((id) => { $(id).value = ""; });
+    } catch (e) { note(msg, "Could not save. Only the treasurer and people with Edit access can record pledges for others.", "err"); }
+  });
+  $("rForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const amount = num($("rAmt").value), date = $("rDate").value, who = $("rWho").value;
+    if (!(amount > 0 && amount <= 2000000) || !date) return note($("rMsg"), "Enter an amount and the date received.", "err");
+    if (date > today()) return note($("rMsg"), "The date received can't be in the future.", "err");
+    try {
+      let cid, label, area;
+      if (who === "__new") {
+        label = $("rLabel").value.trim() || "Anonymous neighbor"; area = $("rArea").value.trim();
+        const ref = S.db.collection("contacts").doc(); cid = ref.id;
+        if ($("rFull").value.trim() || $("rEmail").value.trim()) await ref.set({name: $("rFull").value.trim(), email: $("rEmail").value.trim(), address: "", area, offline: true, by: S.uid, updatedAt: new Date().toISOString()});
+      } else {
+        const p = S.pledges.find((x) => x.id === who); cid = who; label = p ? p.label : "Neighbor"; area = p ? p.area : "";
+      }
+      await S.db.collection("ledger/main/receipts").add({cid, label, area, amount, date, method: $("rMethod").value, note: $("rNote").value.trim(), depositRef: $("rDep").value.trim(), by: S.uid, createdAt: new Date().toISOString()});
+      note($("rMsg"), `Deposit of ${fmt(amount)} from ${label} saved and applied to any open pledge.`, "");
+      ["rAmt", "rNote", "rLabel", "rArea", "rFull", "rEmail", "rDep"].forEach((id) => { $(id).value = ""; });
+    } catch (e) { note($("rMsg"), "Could not save. Only the treasurer and editors can record income.", "err"); }
+  });
+
+  $("eForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const amount = num($("eAmt").value), date = $("eDate").value, payee = $("ePayee").value.trim();
+    if (!(amount > 0) || !date || !payee) return note($("eMsg"), "Enter the date, amount and who was paid.", "err");
+    try {
+      await S.db.collection("ledger/main/expenses").add({date, amount, payee, category: $("eCat").value, status: $("eStatus").value, description: $("eDesc").value.trim(), by: S.uid, createdAt: new Date().toISOString()});
+      note($("eMsg"), `Recorded ${fmt(amount)} paid to ${payee}.`, "");
+      ["eAmt", "ePayee", "eDesc"].forEach((id) => { $(id).value = ""; });
+    } catch (e) { note($("eMsg"), "Could not save. Only the treasurer and editors can record expenses.", "err"); }
+  });
+
+  $("sForm").addEventListener("input", () => { $("sForm").dataset.touched = "1"; });
+  $("sForm").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const pay = $("sPay").value.trim();
+    if (pay && !/^https:\/\//i.test(pay)) return note($("sMsg"), "The payment link must start with https://", "err");
+    const ms = $("sMs").value.split("\n").map((l) => l.split("|").map((x) => x.trim())).filter((p) => p[0])
+      .map(([a, t, d]) => ({amount: num(String(a).replace(/[$,]/g, "")), title: t || "", desc: d || ""}));
+    if (!ms.length || ms.some((m) => !(m.amount > 0) || !m.title)) return note($("sMsg"), "Each milestone needs an amount and a title, like: 10000 | Retain a land use attorney | description", "err");
+    try {
+      await S.db.doc("settings/site").set({orgName: $("sOrg").value.trim(), paymentUrl: pay, milestones: ms.sort((a, b) => a.amount - b.amount), updatedAt: new Date().toISOString()});
+      delete $("sForm").dataset.touched; note($("sMsg"), "Settings saved.", "");
+    } catch (e) { note($("sMsg"), "Could not save settings.", "err"); }
+  });
+
+  // ---------- Boot ----------
+  $("rDate").value = today(); $("eDate").value = today(); $("plDate").value = today();
+  try { const t = localStorage.getItem("fundTab"); if (t && t !== "admin") show(t); } catch (e) {}
+  render();
+
+  (async () => {
+    const [db, user] = await Promise.all([window.claude?.use?.("db"), window.claude?.use?.("user")]);
+    if (!db) { note($("status"), "Sign in to Claude to see the live ledger and record a pledge. You can still pay using the fund's payment link when it is shared with you.", "warn"); return; }
+    S.db = db;
+    S.uid = user ? await user.id() : null; S.user = user;
+    S.admin = user ? await user.canEdit() : false;
+    if (S.admin) { $("tab-admin").hidden = false; try { if (localStorage.getItem("fundTab") === "admin") show("admin"); } catch (e) {} }
+    const onErr = () => note($("status"), "The live ledger is temporarily unavailable. Figures may be out of date.", "warn");
+    const list = (snap) => snap.docs.map((d) => ({id: d.id, ...d.data()}));
+    db.doc("settings/site").onSnapshot((s) => { S.settings = s.exists ? s.data() : {}; render(); }, onErr);
+    db.collection("pledges").onSnapshot((s) => { S.pledges = list(s); render(); }, onErr);
+    db.collection("ledger/main/receipts").onSnapshot((s) => { S.receipts = list(s); render(); }, onErr);
+    db.collection("ledger/main/expenses").onSnapshot((s) => { S.expenses = list(s); render(); }, onErr);
+    if (S.admin) db.collection("contacts").onSnapshot((s) => { S.contacts = list(s); render(); }, () => {});
+  })();
+})();
+</script>

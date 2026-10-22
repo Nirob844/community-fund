@@ -1,0 +1,35 @@
+Prospect Road Community Fund website, version 3.2: quality assurance results
+Run on 2026-10-17 with: npm test
+
+Pre-deploy check ............ passed (no secrets, SEO tags, security policy, and the new backdoor sweep)
+Server unit tests ........... 96 / 96 passed
+Database tests (Postgres) ... 52 / 52 passed (includes upgrades from v2 and v3.1)
+Browser end-to-end .......... 75 / 75 passed
+Live Claude page ............ 9 / 9 passed
+Total ....................... 232 automated tests, all passing
+
+New in v3.2 and covered by tests
+- Giving plans: limits, recurring card checkout, invoices recorded once each, plan completes and Stripe
+  subscription ends after the last payment, declined payments, stopping by donor or treasurer, older Stripe formats
+- Give again and pay-what-is-owed from the private link; payments capped at the per-payment limit
+- Treasurer limits, goals, suggested amounts and goal prompts (enforced by the database too)
+- Developer role: 1-30 days, one at a time, no personal data, expiry, removal blocks sign-in, handover removes access
+- Activity log: append-only for staff, server and database owner; tamper detection; refused access logged
+- Lockdown: the public key can run no database function; security self-check passes and detects a planted weakness
+
+Bugs planted on purpose to prove the tests catch them (all caught)
+- developer able to read the books; function lockdown removed; activity log editable; plan payment limit ignored;
+  card charged after the last plan payment; someone else's plan stoppable; expired access accepted;
+  development shortcut on the live site; bypass switch planted; unguarded endpoint planted; prompts ignoring pledges
+(One planted change, removing a second developer check in requireStaff, changed nothing because the role ranking
+already refuses developers; it is kept as defence in depth.)
+
+Problems found and fixed during this round
+- Three database functions treated "the database owner" as the server; inside those functions that is always true.
+  Replaced with a real server check (is_server).
+- Postgres lets everyone run new functions by default. Now revoked for every fund function; granted only where needed.
+- The "plan stopped" confirmation vanished when the private page refreshed.
+- Settings overflowed by 15 pixels on a phone; radio choices were styled like text boxes.
+
+Not tested here (needs the fund's real accounts): Stripe test-mode subscriptions with a test clock, Supabase,
+Resend and Turnstile. docs/LAUNCH_CHECKLIST.md items 19-27 cover them.

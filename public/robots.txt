@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /share/
+Disallow: /thanks/
+
+Sitemap: https://example.org/sitemap.xml

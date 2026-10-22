@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Community Statistics: Contributions by Neighborhood | Prospect Road Community Fund</title>
+<meta name="description" content="Live statistics for the Prospect Road Community Fund: contributions by neighborhood, money raised over time, gift sizes, how people give and where the money goes.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://example.org/stats/">
+<meta name="theme-color" content="#1d4f97" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b2550" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prospect Road Community Fund">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Community Statistics: Contributions by Neighborhood | Prospect Road Community Fund">
+<meta property="og:description" content="Live statistics for the Prospect Road Community Fund: contributions by neighborhood, money raised over time, gift sizes, how people give and where the money goes.">
+<meta property="og:url" content="https://example.org/stats/">
+<meta property="og:image" content="https://example.org/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sunrise over a green park with the words Prospect Road Community Fund">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Community Statistics: Contributions by Neighborhood | Prospect Road Community Fund">
+<meta name="twitter:description" content="Live statistics for the Prospect Road Community Fund: contributions by neighborhood, money raised over time, gift sizes, how people give and where the money goes.">
+<meta name="twitter:image" content="https://example.org/assets/img/og-image.png">
+<meta name="geo.region" content="US-FL">
+<meta name="geo.placename" content="Manatee County, Florida">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar gutter"><div class="wrap">
+  <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f97"/><stop offset=".7" stop-color="#a9cdf0"/><stop offset="1" stop-color="#f4a65c"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><circle cx="16" cy="22" r="7" fill="#ffe2a8"/><path d="M0 23c5-3 9-3 13-1s9 2 19-2v12H0z" fill="#1f5a3f"/></svg><span>Prospect Road Community Fund</span></a>
+  <nav class="topnav" aria-label="Main"><a href="/">Home</a><a href="/transparency/">Transparency</a><a href="/stats/" aria-current="page">Stats</a><a href="/#pledge">Pledge</a><a href="/updates/">Updates</a></nav>
+</div></header>
+
+<div class="hero short gutter" role="presentation">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="sunglow"></div>
+  <div class="wrap">
+    <p class="eyebrow">Community statistics</p>
+    <h1>Neighbors standing together</h1>
+    <p class="lede">Who is giving, how much, and where it goes, updated live from the fund's books. Individual names are never shown here.</p>
+  </div>
+  <svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C80 30 140 34 200 40C260 20 300 18 340 32C400 12 450 14 500 30C560 24 600 36 660 30C720 8 780 10 830 28C890 22 930 34 990 26C1050 14 1110 20 1200 34L1200 70L0 70Z"/></svg>
+</div>
+
+<main id="main" class="gutter"><div class="wrap">
+  <section class="summary" aria-label="Key figures" aria-live="polite">
+    <div class="tile hl"><div class="k">Raised so far</div><div class="v" id="kRec">—</div></div>
+    <div class="tile"><div class="k">Neighbors contributing</div><div class="v" id="kPeople">—</div></div>
+    <div class="tile"><div class="k">Communities represented</div><div class="v" id="kAreas">—</div></div>
+    <div class="tile"><div class="k" id="kMedianLabel">Typical contribution (median)</div><div class="v" id="kMedian">—</div></div>
+  </section>
+  <div id="status" class="note warn" hidden></div>
+  <p class="hint"><span id="updated"></span></p>
+
+  <section class="block card" aria-labelledby="c1">
+    <h2 id="c1">Contributions by community</h2>
+    <p class="sub">Received and pledged, by neighborhood. <span id="topArea"></span></p>
+    <div class="legend"><span><i class="sw-rec"></i>Received</span><span><i class="sw-pl"></i>Pledged, not yet received</span></div>
+    <div class="hbars" id="nbChart"></div>
+    <details class="tbl"><summary>Show as table</summary><div class="tablewrap"><table><thead><tr><th scope="col">Community</th><th scope="col" class="r">Contributors</th><th scope="col" class="r">Received</th><th scope="col" class="r">Pledged</th></tr></thead><tbody id="nbTable"></tbody></table></div></details>
+  </section>
+
+  <div class="cards">
+    <section class="card" aria-labelledby="c2">
+      <h2 id="c2">Money raised over time</h2>
+      <p class="sub">Running total of money received, against the current milestone.</p>
+      <div id="timeChart" class="chart"></div>
+    </section>
+    <section class="card" aria-labelledby="c3">
+      <h2 id="c3">Contribution sizes</h2>
+      <p class="sub">Number of neighbors by total given. Every size matters.</p>
+      <div id="sizeChart" class="chart"></div>
+    </section>
+  </div>
+
+  <div class="cards">
+    <section class="card" aria-labelledby="c4">
+      <h2 id="c4">How neighbors give</h2>
+      <p class="sub">Money received by payment method.</p>
+      <div class="hbars wrapnames" id="methodChart"></div>
+    </section>
+    <section class="card" aria-labelledby="c5">
+      <h2 id="c5">Where the money goes</h2>
+      <p class="sub" id="spendNote">Spending by category.</p>
+      <div class="hbars wrapnames" id="spendChart"></div>
+    </section>
+  </div>
+
+  <section class="block card" aria-labelledby="c6">
+    <h2 id="c6">Month by month</h2>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Month</th><th scope="col" class="r">Contributions</th><th scope="col" class="r">Received</th><th scope="col" class="r">Spent</th><th scope="col" class="r">Net</th></tr></thead><tbody id="monthRows"></tbody></table></div>
+    <p class="hint">Full detail is on the <a href="/transparency/">Transparency page</a>.</p>
+  </section>
+</div></main>
+<footer class="site gutter"><div class="wrap">
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/transparency/">Transparency</a><a href="/stats/">Statistics</a><a href="/updates/">Updates</a><a href="/live-local-act/">The Live Local Act</a><a href="/park/">Park vision</a><a href="/#faq">FAQ</a><a href="/privacy/">Privacy</a><a href="/share/">My share</a></nav>
+  <p class="legal">Prospect Road Community Fund is organized by volunteer residents of Manatee County, Florida. Contributions are not tax-deductible unless and until the organization receives 501(c)(3) recognition or uses a fiscal sponsor. Statements are prepared by the volunteer treasurer and are unaudited. If the fund closes, any remaining balance is returned in proportion to contributions unless contributors agree otherwise. This site is not legal advice.</p>
+  <p class="legal" id="fdacs"></p>
+</div></footer>
+<div class="tip" id="tip" hidden></div>
+<script type="module" src="/assets/js/stats.js"></script>
+</body>
+</html>

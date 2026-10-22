@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Transparency: Ledger, Income Statement & Balance Sheet | Prospect Road Community Fund</title>
+<meta name="description" content="Every contribution and expense of the Prospect Road Community Fund, with a live income statement, balance sheet and each contributor's proportional refund share.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://example.org/transparency/">
+<meta name="theme-color" content="#1d4f97" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b2550" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prospect Road Community Fund">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Transparency: Ledger, Income Statement & Balance Sheet | Prospect Road Community Fund">
+<meta property="og:description" content="Every contribution and expense of the Prospect Road Community Fund, with a live income statement, balance sheet and each contributor's proportional refund share.">
+<meta property="og:url" content="https://example.org/transparency/">
+<meta property="og:image" content="https://example.org/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sunrise over a green park with the words Prospect Road Community Fund">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Transparency: Ledger, Income Statement & Balance Sheet | Prospect Road Community Fund">
+<meta name="twitter:description" content="Every contribution and expense of the Prospect Road Community Fund, with a live income statement, balance sheet and each contributor's proportional refund share.">
+<meta name="twitter:image" content="https://example.org/assets/img/og-image.png">
+<meta name="geo.region" content="US-FL">
+<meta name="geo.placename" content="Manatee County, Florida">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar gutter"><div class="wrap">
+  <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f97"/><stop offset=".7" stop-color="#a9cdf0"/><stop offset="1" stop-color="#f4a65c"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><circle cx="16" cy="22" r="7" fill="#ffe2a8"/><path d="M0 23c5-3 9-3 13-1s9 2 19-2v12H0z" fill="#1f5a3f"/></svg><span>Prospect Road Community Fund</span></a>
+  <nav class="topnav" aria-label="Main"><a href="/">Home</a><a href="/transparency/" aria-current="page">Transparency</a><a href="/stats/">Stats</a><a href="/#pledge">Pledge</a><a href="/updates/">Updates</a></nav>
+</div></header>
+
+<div class="hero short gutter" role="presentation">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="sunglow"></div>
+  <div class="wrap">
+    <p class="eyebrow">Open books</p>
+    <h1>Every dollar, in the open</h1>
+    <p class="lede">Income, expenses, statements and refund shares, updated live. Contributors appear by first name, last initial and neighborhood only.</p>
+  </div>
+  <svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C80 30 140 34 200 40C260 20 300 18 340 32C400 12 450 14 500 30C560 24 600 36 660 30C720 8 780 10 830 28C890 22 930 34 990 26C1050 14 1110 20 1200 34L1200 70L0 70Z"/></svg>
+</div>
+
+<main id="main" class="gutter"><div class="wrap">
+  <section class="summary" aria-label="Fund totals" aria-live="polite">
+    <div class="tile hl"><div class="k">Cash on hand</div><div class="v" id="tCash">—</div></div>
+    <div class="tile"><div class="k">Received</div><div class="v" id="tRec">—</div></div>
+    <div class="tile"><div class="k">Pledged, not yet received</div><div class="v" id="tOut">—</div></div>
+    <div class="tile"><div class="k">Spent</div><div class="v" id="tExp">—</div></div>
+  </section>
+  <div id="status" class="note warn" hidden></div>
+  <p class="hint"><span id="updated"></span> · <a class="btn small ghost" id="csv" href="/api/ledger-csv" download>Download the full ledger (CSV)</a></p>
+
+  <section class="block card" aria-labelledby="incTitle">
+    <h2 id="incTitle">Income</h2>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Date</th><th scope="col">Contributor</th><th scope="col">Neighborhood</th><th scope="col">Method</th><th scope="col" class="r">Amount</th></tr></thead><tbody id="incomeRows"></tbody></table></div>
+    <p class="hint" id="incomeMore" hidden></p>
+    <h3 class="block">Pledges awaiting payment</h3>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Contributor</th><th scope="col">Neighborhood</th><th scope="col" class="r">Pledged</th><th scope="col" class="r">Received</th><th scope="col" class="r">Outstanding</th></tr></thead><tbody id="pledgeRows"></tbody></table></div>
+  </section>
+
+  <section class="block card" aria-labelledby="rfTitle">
+    <h2 id="rfTitle">Refunds and money returned</h2>
+    <p class="sub">Refunds to contributors, card chargebacks, and payouts when the fund closes.</p>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Date</th><th scope="col">Contributor</th><th scope="col">Neighborhood</th><th scope="col">Type</th><th scope="col" class="r">Amount</th></tr></thead><tbody id="refundRows"></tbody></table></div>
+  </section>
+
+  <section class="block card" aria-labelledby="expTitle">
+    <h2 id="expTitle">Expenses</h2>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Date</th><th scope="col">Paid to</th><th scope="col">Category</th><th scope="col">Description</th><th scope="col">Status</th><th scope="col" class="r">Amount</th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+    <p class="hint" id="expenseMore" hidden></p>
+  </section>
+
+  <section class="block card" aria-labelledby="stTitle">
+    <h2 id="stTitle">Financial statements</h2>
+    <div class="statements">
+      <div><h3>Income statement</h3><p class="hint" id="isAsOf"></p><div class="tablewrap"><table><tbody id="incomeStmt"></tbody></table></div></div>
+      <div><h3>Balance sheet</h3><p class="hint" id="bsAsOf"></p><div class="tablewrap"><table><tbody id="balanceSheet"></tbody></table></div></div>
+    </div>
+    <p class="hint">Contributions are counted when received. Unpaid bills are shown as liabilities. Unaudited.</p>
+  </section>
+
+  <section class="block card" id="shares" aria-labelledby="shTitle">
+    <h2 id="shTitle">Refund shares</h2>
+    <p class="sub">If the fund closes with money left, it is returned in proportion to what each person contributed.</p>
+    <div class="explain">
+      <div><div class="k">Total received</div><div class="v" id="sRec">—</div></div>
+      <div><div class="k">Less expenses and money already returned</div><div class="v" id="sExp">—</div></div>
+      <div><div class="k">Available to return</div><div class="v" id="sPool">—</div></div>
+    </div>
+    <p class="hint">Example: if one person gives $100 and expenses are $100, nothing remains. If a second person also gives $100 and expenses stay at $100, each gets $50 back. <a href="/share/">See your own share</a>.</p>
+    <div class="tablewrap"><table><thead><tr><th scope="col">Contributor</th><th scope="col">Neighborhood</th><th scope="col" class="r">Contributed</th><th scope="col">Share of fund</th><th scope="col" class="r">Would receive</th></tr></thead><tbody id="shareRows"></tbody></table></div>
+    <p class="hint" id="shareMore" hidden></p>
+  </section>
+</div></main>
+<footer class="site gutter"><div class="wrap">
+  <nav aria-label="Footer"><a href="/">Home</a><a href="/transparency/">Transparency</a><a href="/stats/">Statistics</a><a href="/updates/">Updates</a><a href="/live-local-act/">The Live Local Act</a><a href="/park/">Park vision</a><a href="/#faq">FAQ</a><a href="/privacy/">Privacy</a><a href="/share/">My share</a></nav>
+  <p class="legal">Prospect Road Community Fund is organized by volunteer residents of Manatee County, Florida. Contributions are not tax-deductible unless and until the organization receives 501(c)(3) recognition or uses a fiscal sponsor. Statements are prepared by the volunteer treasurer and are unaudited. If the fund closes, any remaining balance is returned in proportion to contributions unless contributors agree otherwise. This site is not legal advice.</p>
+  <p class="legal" id="fdacs"></p>
+</div></footer>
+<div class="tip" id="tip" hidden></div>
+<script type="module" src="/assets/js/transparency.js"></script>
+</body>
+</html>

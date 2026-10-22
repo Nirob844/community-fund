@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Staff Console | Prospect Road Community Fund</title>
+<meta name="description" content="Treasurer console.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://example.org/admin/">
+<meta name="theme-color" content="#1d4f97" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b2550" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Prospect Road Community Fund">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Staff Console | Prospect Road Community Fund">
+<meta property="og:description" content="Treasurer console.">
+<meta property="og:url" content="https://example.org/admin/">
+<meta property="og:image" content="https://example.org/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Sunrise over a green park with the words Prospect Road Community Fund">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Staff Console | Prospect Road Community Fund">
+<meta name="twitter:description" content="Treasurer console.">
+<meta name="twitter:image" content="https://example.org/assets/img/og-image.png">
+<meta name="geo.region" content="US-FL">
+<meta name="geo.placename" content="Manatee County, Florida">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=Source+Sans+3:wght@400;600;700&display=swap">
+<link rel="stylesheet" href="/assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar gutter"><div class="wrap">
+  <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f97"/><stop offset=".7" stop-color="#a9cdf0"/><stop offset="1" stop-color="#f4a65c"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><circle cx="16" cy="22" r="7" fill="#ffe2a8"/><path d="M0 23c5-3 9-3 13-1s9 2 19-2v12H0z" fill="#1f5a3f"/></svg><span>Prospect Road Community Fund</span></a>
+  <nav class="topnav" aria-label="Main"><a href="/">Home</a><a href="/transparency/">Transparency</a><a href="/stats/">Stats</a><a href="/#pledge">Pledge</a><a href="/updates/">Updates</a></nav>
+</div></header>
+
+<div class="hero short gutter" role="presentation">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="sunglow"></div>
+  <div class="wrap">
+    <p class="eyebrow">Treasurer</p>
+    <h1>Staff console</h1>
+    <p class="lede" id="who">Sign in with your staff email.</p>
+  </div>
+  <svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C80 30 140 34 200 40C260 20 300 18 340 32C400 12 450 14 500 30C560 24 600 36 660 30C720 8 780 10 830 28C890 22 930 34 990 26C1050 14 1110 20 1200 34L1200 70L0 70Z"/></svg>
+</div>
+
+<main id="main" class="gutter"><div class="wrap">
+  <div id="status" class="note err" hidden role="alert"></div>
+  <section class="card" id="auth">
+    <h2>Staff sign-in</h2>
+    <p class="sub">For the treasurer and up to four team members. You'll get a one-time code by email; there is no password.</p>
+    <form id="emailForm"><div class="field"><label for="aEmail">Your staff email</label><input id="aEmail" type="email" autocomplete="email" required></div><button class="btn" type="submit">Email me a sign-in code</button></form>
+    <form id="codeForm" hidden><div class="field"><label for="aCode">6-digit code</label><input id="aCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" required></div><button class="btn" type="submit">Sign in</button></form>
+    <div id="authMsg" class="note" hidden role="status"></div>
+  </section>
+
+  <div id="console" hidden>
+    <div class="staffbar"><span id="roleBadge" class="pill"></span><span class="hint">Entries update the public ledger, statistics and statements within a minute.</span><button class="btn small ghost" id="signOut" type="button">Sign out</button></div>
+    <div class="summary staff-sum" id="staffSum" aria-label="Fund totals">
+      <div class="tile hl"><div class="k">Cash on hand</div><div class="v" id="tCash">—</div></div>
+      <div class="tile"><div class="k">Received (after refunds)</div><div class="v" id="tRec">—</div></div>
+      <div class="tile"><div class="k">Pledged, not yet received</div><div class="v" id="tOut">—</div></div>
+      <div class="tile"><div class="k">Spent</div><div class="v" id="tExp">—</div></div>
+    </div>
+    <div id="fundBanner" class="note warn" hidden></div>
+    <div id="issueBanner" class="note warn" hidden role="status"></div>
+
+    <nav class="tabs ctabs" role="tablist" aria-label="Console sections">
+      <button role="tab" data-ctab="record" data-need="recorder" aria-selected="true">Record</button>
+      <button role="tab" data-ctab="pledges" aria-selected="false">Pledges</button>
+      <button role="tab" data-ctab="money" aria-selected="false">Money in and out</button>
+      <button role="tab" data-ctab="people" aria-selected="false">People</button>
+      <button role="tab" data-ctab="closing" aria-selected="false">Closing</button>
+      <button role="tab" data-ctab="news" data-need="treasurer" aria-selected="false">Updates</button>
+      <button role="tab" data-ctab="records" aria-selected="false">Audit and exports</button>
+      <button role="tab" data-ctab="team" data-need="treasurer" aria-selected="false">Team</button>
+      <button role="tab" data-ctab="settings" data-need="treasurer" aria-selected="false">Settings</button>
+      <button role="tab" data-ctab="system" data-roles="treasurer auditor developer" aria-selected="false">System and activity</button>
+    </nav>
+
+    <!-- RECORD -->
+    <section data-cpanel="record" data-need="recorder">
+      <div class="grid2">
+        <div class="card">
+          <h2>Record a pledge</h2>
+          <p class="sub">For pledges made in person, by phone or on paper.</p>
+          <form id="plForm" novalidate>
+            <div class="field picker">
+            <label for="plFind">Contributor</label>
+            <input id="plFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="plResults">
+            <ul class="pick-results" id="plResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="plChosen">New contributor</div>
+          </div>
+            <div id="plNew">
+              <div class="row">
+                <div class="field"><label for="plName">Full name</label><input id="plName" maxlength="80"></div>
+                <div class="field"><label for="plEmail">Email (optional)</label><input id="plEmail" type="email" maxlength="120"></div>
+              </div>
+              <div class="field"><label for="plAddr">Street address (private)</label><input id="plAddr" maxlength="160"></div>
+              <div class="row">
+                <div class="field"><label for="plArea">Neighborhood</label><input id="plArea" list="areasA" maxlength="60"></div>
+                <div class="field"><label for="plShow">Show publicly as</label><select id="plShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select></div>
+              </div>
+            </div>
+            <label class="hint consent"><input type="checkbox" id="plPlan"><span>Paid in smaller amounts over time (giving plan)</span></label>
+            <div class="row" id="plPlanBox" hidden>
+              <div class="field"><label for="plInst">Each payment</label><input id="plInst" type="number" min="1" step="0.01"></div>
+              <div class="field"><label for="plFreq">How often</label><select id="plFreq"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="quarterly">Every 3 months</option></select></div>
+              <div class="field"><label for="plCount">Number of payments</label><input id="plCount" type="number" min="2" max="120" step="1" value="6"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="plAmt">Pledge amount</label><input id="plAmt" type="number" min="1" max="2000000" step="0.01" required></div>
+              <div class="field"><label for="plDate">Date pledged</label><input id="plDate" type="date" required></div>
+            </div>
+            <button class="btn" type="submit">Save pledge</button>
+            <div id="plMsg" class="note" hidden role="status"></div>
+          </form>
+        </div>
+        <div class="card">
+          <h2>Record a deposit received</h2>
+          <p class="sub">Checks, cash, Zelle, bank transfers and GoFundMe payouts. Applied to the person's open pledges automatically.</p>
+          <form id="rForm" novalidate>
+            <div class="field picker">
+            <label for="rFind">Received from</label>
+            <input id="rFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="rResults">
+            <ul class="pick-results" id="rResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="rChosen">New contributor</div>
+          </div>
+            <div id="rNew" class="row">
+              <div class="field"><label for="rFull">Full name (private, optional)</label><input id="rFull" maxlength="80"></div>
+              <div class="field"><label for="rLabel">Public label</label><input id="rLabel" placeholder="Blank = Anonymous neighbor" maxlength="60"></div>
+              <div class="field"><label for="rArea">Neighborhood</label><input id="rArea" list="areasA" maxlength="60"></div>
+              <div class="field"><label for="rEmail">Email (optional)</label><input id="rEmail" type="email" maxlength="120"></div>
+            </div>
+            <div id="rOwed" class="hint" hidden></div>
+            <div class="field" id="rPlanBox" hidden><label for="rPlan">Apply to a giving plan</label><select id="rPlan"></select></div>
+            <div class="row">
+              <div class="field"><label for="rAmt">Amount</label><input id="rAmt" type="number" min="0.01" max="2000000" step="0.01" required></div>
+              <div class="field"><label for="rDate">Date received</label><input id="rDate" type="date" required></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="rMethod">Method</label><select id="rMethod"><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div>
+              <div class="field"><label for="rNote">Check number or reference (private)</label><input id="rNote" maxlength="80"></div>
+            </div>
+            <div class="field"><label for="rDep">Bank deposit slip or batch (private)</label><input id="rDep" maxlength="80" placeholder="e.g. DEP-2026-10-16"></div>
+            <label class="hint consent"><input type="checkbox" id="rEmailReceipt" checked><span>Email a receipt to the contributor (if we have their email)</span></label>
+            <button class="btn" type="submit">Save deposit</button>
+            <div id="rMsg" class="note" hidden role="status"></div>
+          </form>
+        </div>
+      </div>
+      <div class="card block" data-need="treasurer">
+        <h2>Record an expense</h2>
+        <form id="eForm" novalidate>
+          <div class="row">
+            <div class="field"><label for="eDate">Date</label><input id="eDate" type="date" required></div>
+            <div class="field"><label for="eAmt">Amount</label><input id="eAmt" type="number" min="0.01" step="0.01" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="ePayee">Paid to</label><input id="ePayee" maxlength="80" required></div>
+            <div class="field"><label for="eCat">Category</label><select id="eCat"><option>Legal fees</option><option>Expert reports</option><option>Filing and court fees</option><option>Public records</option><option>Printing and outreach</option><option>Platform and bank fees</option><option>Registration and filings</option><option>Land acquisition</option><option>Other</option></select></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="eDesc">Description (public)</label><input id="eDesc" maxlength="160"></div>
+            <div class="field"><label for="eStatus">Status</label><select id="eStatus"><option value="paid">Paid</option><option value="unpaid">Unpaid bill</option></select></div>
+          </div>
+          <div><button class="btn sun" type="submit">Save expense</button></div>
+          <div id="eMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+    </section>
+    <datalist id="areasA"><option value="Magnolia Point"></option><option value="Prospect Road"></option><option value="Tuttle Avenue"></option><option value="Whitfield"></option><option value="Other Manatee County"></option><option value="Sarasota County"></option></datalist>
+
+    <!-- PLEDGES -->
+    <section data-cpanel="pledges" hidden>
+      <div class="card">
+        <h2>Pledges</h2>
+        <div class="filters">
+          <div class="field"><label for="pgSearch">Search</label><input id="pgSearch" type="search" placeholder="Name or email"></div>
+          <div class="field"><label for="pgStatus">Status</label><select id="pgStatus"><option value="">All</option><option value="open">Open</option><option value="partial">Partly paid</option><option value="paid">Paid</option><option value="withdrawn">Withdrawn</option><option value="cancelled">Cancelled</option></select></div>
+        </div>
+        <div class="tablewrap"><table><thead><tr><th>Date</th><th>Contributor</th><th>Neighborhood</th><th class="r">Amount</th><th>Status</th><th>Entered by</th><th></th></tr></thead><tbody id="pledgeRows"></tbody></table></div>
+        <div class="pager" id="pledgePager"></div>
+      </div>
+      <div class="card block">
+        <h2>Giving plans</h2>
+        <p class="sub">Donors giving smaller amounts over time. Card plans are charged automatically and stop by themselves after the last payment; hand-collected plans are counted as deposits are recorded against them.</p>
+        <div class="filters"><div class="field"><label for="gpStatus">Status</label><select id="gpStatus"><option value="">All</option><option value="active">Active</option><option value="pending">Waiting for setup</option><option value="past_due">Payment failed</option><option value="completed">Completed</option><option value="cancelled">Stopped</option></select></div></div>
+        <div class="tablewrap"><table><thead><tr><th>Started</th><th>Contributor</th><th class="r">Each payment</th><th>How often</th><th>Made</th><th>Next payment</th><th>Status</th><th></th></tr></thead><tbody id="gplanRows"></tbody></table></div>
+        <div class="pager" id="gplanPager"></div>
+      </div>
+    </section>
+
+    <!-- MONEY -->
+    <section data-cpanel="money" hidden>
+      <div class="card">
+        <h2>Deposits received</h2>
+        <div class="filters"><div class="field"><label for="mgSearch">Search</label><input id="mgSearch" type="search" placeholder="Public label, reference or slip"></div>
+          <div class="field"><label for="mgMethod">Method</label><select id="mgMethod"><option value="">All</option><option>Online (Stripe)</option><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div></div>
+        <div class="tablewrap"><table><thead><tr><th>Date</th><th>From</th><th>Method</th><th>Reference</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="depositRows"></tbody></table></div>
+        <div class="pager" id="depositPager"></div>
+        <form id="rfForm" class="block inline-form" hidden novalidate>
+          <h3 id="rfTitle">Refund</h3>
+          <div class="row">
+            <div class="field"><label for="rfAmt">Refund amount</label><input id="rfAmt" type="number" min="0.01" step="0.01" required></div>
+            <div class="field"><label for="rfMethod">How it is refunded</label><select id="rfMethod"><option>Check</option><option>Zelle</option><option>Cash</option><option>Bank transfer</option><option>Other</option></select></div>
+          </div>
+          <div class="field"><label for="rfReason">Reason (shown publicly)</label><input id="rfReason" maxlength="160" placeholder="e.g. Contributor moved away"></div>
+          <div class="btnrow"><button class="btn danger" type="submit">Issue refund</button><button class="btn ghost" type="button" id="rfCancel">Cancel</button></div>
+          <div id="rfMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+      <div class="card block">
+        <h2>Refunds, chargebacks and payouts</h2>
+        <div class="tablewrap"><table><thead><tr><th>Date</th><th>To</th><th>Type</th><th>Method</th><th>Reason</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="refundRows"></tbody></table></div>
+        <div class="pager" id="refundPager"></div>
+      </div>
+      <div class="card block">
+        <h2>Expenses</h2>
+        <div class="tablewrap"><table><thead><tr><th>Date</th><th>Paid to</th><th>Category</th><th>Status</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+        <div class="pager" id="expensePager"></div>
+      </div>
+    </section>
+
+    <!-- PEOPLE -->
+    <section data-cpanel="people" hidden>
+      <div class="card">
+        <h2>Contributors (private)</h2>
+        <p class="sub">Correct details, combine duplicate records, or erase a person's details on request. Money records are kept for the books but stop identifying them.</p>
+        <div class="filters"><div class="field"><label for="ppSearch">Search</label><input id="ppSearch" type="search" placeholder="Name, email or neighborhood"></div></div>
+        <div class="tablewrap"><table><thead><tr><th>Name</th><th>Email</th><th>Address</th><th>Neighborhood</th><th>Public label</th><th></th></tr></thead><tbody id="peopleRows"></tbody></table></div>
+        <div class="pager" id="peoplePager"></div>
+        <form id="cForm" class="block inline-form" hidden novalidate>
+          <h3>Edit contributor</h3>
+          <div class="row">
+            <div class="field"><label for="cName">Full name</label><input id="cName" maxlength="80" required></div>
+            <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" maxlength="120"></div>
+          </div>
+          <div class="field"><label for="cAddr">Street address</label><input id="cAddr" maxlength="160"></div>
+          <div class="row">
+            <div class="field"><label for="cArea">Neighborhood</label><input id="cArea" list="areasA" maxlength="60"></div>
+            <div class="field"><label for="cLabel">Public label</label><input id="cLabel" maxlength="60" required></div>
+          </div>
+          <div class="btnrow"><button class="btn" type="submit">Save changes</button><button class="btn ghost" type="button" id="cCancel">Cancel</button></div>
+          <div id="cMsg" class="note" hidden role="status"></div>
+        </form>
+        <form id="mForm" class="block inline-form" hidden novalidate>
+          <h3 id="mTitle">Combine records</h3>
+          <div class="field picker">
+            <label for="mFind">Keep this record (the other is merged into it)</label>
+            <input id="mFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="mResults">
+            <ul class="pick-results" id="mResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="mChosen">New contributor</div>
+          </div>
+          <div class="btnrow"><button class="btn" type="submit">Combine</button><button class="btn ghost" type="button" id="mCancel">Cancel</button></div>
+          <div id="mMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section data-cpanel="closing" hidden>
+      <div class="card">
+        <h2>Closing the fund</h2>
+        <p class="sub">When the fund's work is done, pay the last bills, then return what is left to contributors in proportion to what each gave. The plan below is calculated by the database to the exact cent.</p>
+        <div class="explain">
+          <div><div class="k">Fund status</div><div class="v" id="clStatus">—</div></div>
+          <div><div class="k">Left to return (after all bills)</div><div class="v" id="clPool">—</div></div>
+          <div><div class="k">Already returned</div><div class="v" id="clPaid">—</div></div>
+        </div>
+        <div id="clMsg" class="note" hidden role="status"></div>
+        <div class="btnrow" data-need="treasurer">
+          <button class="btn ghost" type="button" id="clStart">1. Stop new pledges (start closing)</button>
+          <button class="btn ghost" type="button" id="clCsv">2. Download payout plan (CSV) for board approval</button>
+          <button class="btn" type="button" id="clFinish">3. Mark the fund closed</button>
+          <button class="btn ghost" type="button" id="clReopen">Reopen the fund</button>
+        </div>
+        <div class="field" data-need="treasurer"><label for="clNote">Public closing note</label><input id="clNote" maxlength="500" placeholder="e.g. The board approved the final payout plan on 1 March 2027."></div>
+        <div class="tablewrap block"><table><thead><tr><th>Contributor</th><th>Email</th><th class="r">Contributed</th><th class="r">Share</th><th class="r">Due</th><th class="r">Paid</th><th class="r">Remaining</th><th></th></tr></thead><tbody id="planRows"></tbody></table></div>
+        <p class="hint" id="planNote"></p>
+      </div>
+    </section>
+
+    <!-- UPDATES -->
+    <section data-cpanel="news" data-need="treasurer" hidden>
+      <div class="grid2">
+        <div class="card">
+          <h2 id="nTitle">New update</h2>
+          <form id="nForm" novalidate>
+            <div class="field"><label for="nHead">Title</label><input id="nHead" maxlength="120" required></div>
+            <div class="row">
+              <div class="field"><label for="nSlug">Web address</label><input id="nSlug" maxlength="80" placeholder="made from the title"></div>
+              <div class="field"><label for="nDate">Date</label><input id="nDate" type="date" required></div>
+            </div>
+            <div class="field"><label for="nSummary">Summary (shown in the list and in search results)</label><input id="nSummary" maxlength="280"></div>
+            <div class="field"><label for="nBody">Text (blank line between paragraphs)</label><textarea id="nBody" maxlength="20000" class="tall"></textarea></div>
+            <label class="hint consent"><input type="checkbox" id="nPub"><span>Published (visible on the website)</span></label>
+            <div class="btnrow"><button class="btn" type="submit">Save update</button><button class="btn ghost" type="button" id="nNew">Start a new one</button></div>
+            <div id="nMsg" class="note" hidden role="status"></div>
+          </form>
+        </div>
+        <div class="card">
+          <h2>All updates</h2>
+          <div class="tablewrap"><table><thead><tr><th>Date</th><th>Title</th><th>Status</th><th></th></tr></thead><tbody id="newsRows"></tbody></table></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AUDIT AND EXPORTS -->
+    <section data-cpanel="records" hidden>
+      <div class="card">
+        <h2>Download the books</h2>
+        <p class="sub">Complete files, however many entries there are. Open them in Excel, Google Sheets or accounting software.</p>
+        <div class="btnrow" id="exports">
+          <button class="btn ghost" type="button" data-export="journal">General journal (double-entry)</button>
+          <button class="btn ghost" type="button" data-export="receipts">Deposits</button>
+          <button class="btn ghost" type="button" data-export="refunds">Refunds and payouts</button>
+          <button class="btn ghost" type="button" data-export="expenses">Expenses</button>
+          <button class="btn ghost" type="button" data-export="pledges">Pledges</button>
+          <button class="btn ghost" type="button" data-export="contributors">Contributors (private)</button>
+          <button class="btn ghost" type="button" data-export="audit">Audit log</button>
+          <button class="btn ghost" type="button" data-export="emails">Email log</button>
+        </div>
+        <div id="xMsg" class="note" hidden role="status"></div>
+      </div>
+      <div class="card block">
+        <h2>Audit log</h2>
+        <p class="sub">Every change anyone has made, newest first. Nobody can edit or delete it, and each entry is sealed to the one before it.</p>
+        <div id="auIntegrity" class="note" role="status">Checking the log's integrity…</div>
+        <div class="filters">
+          <div class="field"><label for="auTable">Area</label><select id="auTable"><option value="">Everything</option><option value="receipts">Deposits</option><option value="pledges">Pledges</option><option value="refunds">Refunds and payouts</option><option value="expenses">Expenses</option><option value="contributors">Contributors</option><option value="settings">Settings</option><option value="admins">Team</option><option value="posts">Updates</option></select></div>
+          <div class="field"><label for="auOp">Change</label><select id="auOp"><option value="">Any</option><option value="INSERT">Added</option><option value="UPDATE">Changed</option><option value="DELETE">Deleted</option><option value="ERASE">Erased</option></select></div>
+        </div>
+        <div class="tablewrap"><table><thead><tr><th>When</th><th>Who</th><th>Area</th><th>Change</th><th>Details</th></tr></thead><tbody id="auditRows"></tbody></table></div>
+        <div class="pager" id="auditPager"></div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section data-cpanel="team" data-need="treasurer" hidden>
+      <div class="card">
+        <h2>Team <span class="hint" id="seatNote"></span></h2>
+        <p class="sub">Up to 5 active people. Treasurer: everything. Recorder: pledges and deposits. Auditor: read only. A developer can be invited for up to 30 days to fix a problem: they see system checks and the activity log only, never people or money, and you can remove them at any time.</p>
+        <div class="tablewrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Last sign-in</th><th>Status</th><th></th></tr></thead><tbody id="teamRows"></tbody></table></div>
+        <form id="tForm" novalidate class="block">
+          <div class="row">
+            <div class="field"><label for="tName">Name</label><input id="tName" maxlength="60" required></div>
+            <div class="field"><label for="tEmail">Email</label><input id="tEmail" type="email" maxlength="120" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="tRole">Role</label><select id="tRole"><option value="recorder">Recorder (pledges and deposits)</option><option value="auditor">Auditor (read only)</option><option value="treasurer">Treasurer (full access)</option><option value="developer">Developer (temporary; system checks only, no personal data)</option></select></div>
+            <div class="field"><span class="lbl">&nbsp;</span><button class="btn" type="submit" id="tAdd">Add team member</button></div>
+          </div>
+          <div class="row" id="tDevBox" hidden>
+            <div class="field"><label for="tDays">Access ends after</label><select id="tDays"><option value="1">1 day</option><option value="3">3 days</option><option value="7" selected>7 days</option><option value="14">14 days</option><option value="30">30 days</option></select></div>
+            <div class="field"><label for="tPurpose">Issue to fix (recorded in the activity log)</label><input id="tPurpose" maxlength="200" placeholder="e.g. Receipt emails are not arriving"></div>
+          </div>
+          <div id="tMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section data-cpanel="settings" data-need="treasurer" hidden>
+      <div class="card">
+        <h2>Fund settings</h2>
+        <form id="sForm" novalidate>
+          <div class="row">
+            <div class="field"><label for="sOrg">Fund name</label><input id="sOrg" maxlength="80"></div>
+            <div class="field"><label for="sReg">FDACS registration number</label><input id="sReg" maxlength="20" placeholder="e.g. CH12345"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="sGfm">GoFundMe link (optional)</label><input id="sGfm" type="url" placeholder="https://"></div>
+            <label class="field consent"><input type="checkbox" id="sOnline"><span>Open online card payments (requires the registration number)</span></label>
+          </div>
+          <fieldset class="set"><legend>Goals</legend>
+            <p class="hint">The scale on the home page moves through these in order. Raise, lower, add or remove goals at any time.</p>
+            <div class="tablewrap"><table class="goal-rows"><thead><tr><th>Amount</th><th>Title</th><th>Description</th><th></th></tr></thead><tbody id="goalRows"></tbody></table></div>
+            <button class="btn small ghost" type="button" id="goalAdd">Add a goal</button>
+          </fieldset>
+          <fieldset class="set"><legend>Limits</legend>
+            <div class="row">
+              <div class="field"><label for="sMin">Smallest gift or payment</label><input id="sMin" type="number" min="1" step="1"></div>
+              <div class="field"><label for="sMax">Largest single card payment</label><input id="sMax" type="number" min="1" step="1"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="sMaxPledge">Largest pledge from the website</label><input id="sMaxPledge" type="number" min="1" step="1"></div>
+              <div class="field"><label for="sMaxDep">Largest deposit recorded by hand</label><input id="sMaxDep" type="number" min="1" step="1"></div>
+            </div>
+            <div class="row">
+              <label class="field consent"><input type="checkbox" id="sPlans"><span>Offer giving plans (smaller payments over time)</span></label>
+              <div class="field"><label for="sPlanMax">Most payments in one plan</label><input id="sPlanMax" type="number" min="2" max="120" step="1"></div>
+            </div>
+            <div class="field"><label for="sAmounts">Suggested amounts (comma separated)</label><input id="sAmounts" placeholder="25, 50, 100, 250, 500, 1000"></div>
+          </fieldset>
+          <fieldset class="set"><legend>Goal prompts on the home page</legend>
+            <label class="hint consent"><input type="checkbox" id="sPrompts"><span>Show "what it will take" targets worked out from the live figures</span></label>
+            <div class="row">
+              <div class="field"><label for="sHeadline">Headline (optional)</label><input id="sHeadline" maxlength="160" placeholder="e.g. Help us hire the land use attorney"></div>
+              <div class="field"><label for="sDeadline">Target date (optional)</label><input id="sDeadline" type="date"></div>
+            </div>
+          </fieldset>
+          <div><button class="btn ghost" type="submit">Save settings</button></div>
+          <div id="sMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+      <div class="card block">
+        <h2>Neighborhood names</h2>
+        <p class="sub">Spelling is tidied automatically ("magnolia pt" becomes "Magnolia Point"). Use this to merge nicknames or different names for the same place. Future entries follow the new name.</p>
+        <div class="tablewrap"><table><thead><tr><th>Neighborhood</th><th class="r">Contributors</th><th class="r">Anonymous gifts</th><th>Rename or merge into</th></tr></thead><tbody id="areaRows"></tbody></table></div>
+        <div id="aMsg" class="note" hidden role="status"></div>
+      </div>
+    </section>
+
+    <!-- SYSTEM AND ACTIVITY -->
+    <section data-cpanel="system" data-roles="treasurer auditor developer" hidden>
+      <div class="card" data-roles="treasurer developer">
+        <h2>System health</h2>
+        <p class="sub">Checks the database's security rules, the logs' integrity and which services are configured. Keys are never shown. Running it is logged.</p>
+        <button class="btn ghost" type="button" id="hRun">Run the checks</button>
+        <div id="hMsg" class="note" hidden role="status"></div>
+        <div class="tablewrap block"><table><thead><tr><th>Check</th><th>Result</th><th>Details</th></tr></thead><tbody id="secRows"></tbody></table></div>
+        <p class="hint" id="envLine"></p>
+      </div>
+      <div class="card block" data-roles="treasurer">
+        <h2>Developer handover</h2>
+        <p class="sub">When the developer has finished, the fund must own every account and every key must be changed, so nothing the developer knew still works. Tick each step, then confirm. Confirming removes all developer access at once; you can invite a developer again later to fix an issue.</p>
+        <ul class="checks-list" id="hoList">
+          <li><label class="consent"><input type="checkbox" class="ho"><span>Netlify site, Supabase project, Stripe account, Resend, Cloudflare and the domain are owned by the fund's shared mailbox, and the developer is removed from each</span></label></li>
+          <li><label class="consent"><input type="checkbox" class="ho"><span>Code repository transferred to the fund (developer removed or read-only)</span></label></li>
+          <li><label class="consent"><input type="checkbox" class="ho"><span>New Supabase service-role key, Stripe secret key, Stripe webhook secret, Resend key and Turnstile secret created and saved in Netlify; old ones deleted</span></label></li>
+          <li><label class="consent"><input type="checkbox" class="ho"><span>Database password reset and two-factor sign-in on for every account</span></label></li>
+          <li><label class="consent"><input type="checkbox" class="ho"><span>System health shows every check passed after the new keys</span></label></li>
+        </ul>
+        <div class="row">
+          <div class="field"><label for="hoKeys">Date the keys were changed</label><input id="hoKeys" type="date"></div>
+          <div class="field"><span class="lbl">&nbsp;</span><button class="btn" type="button" id="hoConfirm">Confirm handover complete</button></div>
+        </div>
+        <p class="hint" id="hoStatus"></p>
+        <div id="hoMsg" class="note" hidden role="status"></div>
+      </div>
+      <div class="card block">
+        <h2>Activity log</h2>
+        <p class="sub">Sign-ins, team and settings changes, refused access attempts, payment problems and errors, newest first. Nobody can edit or delete it, and each entry is sealed to the one before it.</p>
+        <div id="acIntegrity" class="note" role="status">Checking the log's integrity…</div>
+        <div class="filters">
+          <div class="field"><label for="acLevel">Show</label><select id="acLevel"><option value="">Everything</option><option value="problems">Problems only (errors and security)</option><option value="security">Security</option><option value="error">Errors</option><option value="warn">Warnings</option><option value="info">Information</option></select></div>
+          <div class="field"><label for="acSearch">Search</label><input id="acSearch" type="search" placeholder="e.g. sign_in, developer, refund"></div>
+        </div>
+        <div class="tablewrap"><table><thead><tr><th>When</th><th>Who</th><th>What</th><th>Level</th><th>Details</th></tr></thead><tbody id="activityRows"></tbody></table></div>
+        <div class="pager" id="activityPager"></div>
+        <div class="btnrow"><button class="btn ghost" type="button" data-export="activity" data-msg="acMsg">Download the activity log</button></div>
+        <div id="acMsg" class="note" hidden role="status"></div>
+      </div>
+    </section>
+  </div>
+</div></main>
+<script type="module" src="/assets/js/admin.js"></script>
+</body>
+</html>
