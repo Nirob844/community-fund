@@ -58,9 +58,20 @@
   <div id="status" class="note err" hidden role="alert"></div>
   <section class="card" id="auth">
     <h2>Staff sign-in</h2>
-    <p class="sub">For the treasurer and up to four team members. You'll get a one-time code by email; there is no password.</p>
-    <form id="emailForm"><div class="field"><label for="aEmail">Your staff email</label><input id="aEmail" type="email" autocomplete="email" required></div><button class="btn" type="submit">Email me a sign-in code</button></form>
-    <form id="codeForm" hidden><div class="field"><label for="aCode">6-digit code</label><input id="aCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" required></div><button class="btn" type="submit">Sign in</button></form>
+    <p class="sub">Sign in with your staff email and password, or request an email code.</p>
+    <form id="passForm">
+      <div class="field"><label for="pEmail">Your staff email</label><input id="pEmail" type="email" autocomplete="email" required></div>
+      <div class="field"><label for="pPass">Password</label><input id="pPass" type="password" autocomplete="current-password" required></div>
+      <div class="btnrow"><button class="btn" type="submit">Sign in</button><button class="btn ghost" type="button" id="useOtp">Sign in with email code instead</button></div>
+    </form>
+    <form id="emailForm" hidden>
+      <div class="field"><label for="aEmail">Your staff email</label><input id="aEmail" type="email" autocomplete="email" required></div>
+      <div class="btnrow"><button class="btn" type="submit">Email me a sign-in code</button><button class="btn ghost" type="button" id="usePass">Sign in with password instead</button></div>
+    </form>
+    <form id="codeForm" hidden>
+      <div class="field"><label for="aCode">6-digit code</label><input id="aCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" required></div>
+      <button class="btn" type="submit">Sign in</button>
+    </form>
     <div id="authMsg" class="note" hidden role="status"></div>
   </section>
 

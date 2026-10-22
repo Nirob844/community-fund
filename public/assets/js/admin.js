@@ -176,6 +176,33 @@ if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) {
   boot();
 }
 
+$("passForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Signing in...");
+  const email = $("pEmail").value.trim();
+  const password = $("pPass").value;
+  if (!EMAIL.test(email)) { done(false); return note($("authMsg"), "Enter a valid email address.", "err"); }
+  if (!password) { done(false); return note($("authMsg"), "Enter your password.", "err"); }
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if (error) { done(false); return note($("authMsg"), error.message || "Invalid email or password.", "err"); }
+  done(true);
+  boot();
+});
+$("useOtp")?.addEventListener("click", () => {
+  $("passForm").hidden = true;
+  $("emailForm").hidden = false;
+  $("aEmail").value = $("pEmail").value;
+  $("aEmail").focus();
+});
+$("usePass")?.addEventListener("click", () => {
+  $("emailForm").hidden = true;
+  $("codeForm").hidden = true;
+  $("passForm").hidden = false;
+  $("pEmail").value = $("aEmail").value;
+  $("pEmail").focus();
+});
+
 $("emailForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const btn = e.target.querySelector('button[type="submit"]');
