@@ -8,7 +8,63 @@ import { $, h, fill, fmt, emptyRow } from "./common.js";
 
 const PAGE = 25;
 const today = () => new Date().toISOString().slice(0, 10);
-const note = (el, text, kind = "") => { el.textContent = text; el.className = "note" + (kind ? " " + kind : ""); el.hidden = !text; };
+function showToast(text, kind = "ok") {
+  if (!text) return;
+  let tc = $("toastContainer");
+  if (!tc) {
+    tc = h("div", { id: "toastContainer", className: "toast-container", "aria-live": "polite" });
+    document.body.appendChild(tc);
+  }
+  const icon = kind === "err" ? "✕" : kind === "warn" ? "⚠" : "✓";
+  const toast = h("div", { className: `toast ${kind}` },
+    h("span", { className: "t-icon" }, icon),
+    h("div", { className: "t-text" }, text),
+    h("button", { className: "t-close", type: "button", "aria-label": "Close", onclick: (e) => { e.stopPropagation(); dismissToast(toast); } }, "×")
+  );
+  tc.appendChild(toast);
+  requestAnimationFrame(() => toast.classList.add("show"));
+  toast._timer = setTimeout(() => dismissToast(toast), 4000);
+}
+
+function dismissToast(toast) {
+  if (!toast || toast._dismissed) return;
+  toast._dismissed = true;
+  clearTimeout(toast._timer);
+  toast.classList.remove("show");
+  toast.classList.add("hide");
+  setTimeout(() => toast.remove(), 250);
+}
+
+function setBtnLoading(btn, text = "Saving...") {
+  if (!btn) return () => {};
+  const origText = btn.textContent;
+  btn.disabled = true;
+  btn.classList.add("loading");
+  btn.replaceChildren(h("span", { className: "spin" }), document.createTextNode(" " + text));
+  return (success = true, successText = "✓ Saved") => {
+    if (success) {
+      btn.replaceChildren(document.createTextNode(successText));
+      setTimeout(() => {
+        btn.textContent = origText;
+        btn.disabled = false;
+        btn.classList.remove("loading");
+      }, 1000);
+    } else {
+      btn.textContent = origText;
+      btn.disabled = false;
+      btn.classList.remove("loading");
+    }
+  };
+}
+
+const note = (el, text, kind = "") => {
+  if (el) {
+    el.textContent = text;
+    el.className = "note" + (kind ? " " + kind : " ok");
+    el.hidden = !text;
+  }
+  if (text) showToast(text, kind || "ok");
+};
 const RANK = { developer: 0, auditor: 1, recorder: 2, treasurer: 3 };
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,63}\.[^\s@]{2,24}$/;
 const KIND = { refund: "Refund", dispute_lost: "Chargeback", closing_payout: "Closing payout" };
@@ -70,11 +126,18 @@ function confirmAct(cellBtn, question, action, done) {
   const wrap = cellBtn.closest("td") || cellBtn.parentElement;
   const keep = [...wrap.childNodes];
   fill(wrap, h("span", { class: "confirm" }, h("span", { class: "hint" }, question + " "),
-    btn("Yes", async () => {
-      const r = await action();
-      fill(wrap, keep);                       // put the original buttons back before anything re-renders
-      if (r?.error) note($("status"), friendly(r.error), "err"); else $("status").hidden = true;
-      done ? done() : refresh();
+    btn("Yes", async (e) => {
+      const finish = setBtnLoading(e.currentTarget, "Working...");
+      try {
+        const r = await action();
+        fill(wrap, keep);                       // put the original buttons back before anything re-renders
+        if (r?.error) note($("status"), friendly(r.error), "err");
+        else { $("status").hidden = true; showToast("Action completed.", "ok"); }
+        done ? done() : refresh();
+      } catch (err) {
+        fill(wrap, keep);
+        note($("status"), friendly(err), "err");
+      }
     }, "btn small danger"),
     btn("No", () => fill(wrap, keep))));
 }
@@ -272,14 +335,16 @@ loaders.record = () => {};
 
 $("plForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving pledge...");
   const msg = $("plMsg"), amount = Number($("plAmt").value), date = $("plDate").value;
-  if (!(amount >= 1 && amount <= 2000000)) return note(msg, "Enter a pledge between $1 and $2,000,000.", "err");
-  if (!date) return note(msg, "Enter the date pledged.", "err");
+  if (!(amount >= 1 && amount <= 2000000)) { done(false); return note(msg, "Enter a pledge between $1 and $2,000,000.", "err"); }
+  if (!date) { done(false); return note(msg, "Enter the date pledged.", "err"); }
   try {
     let cid = plPick.get()?.id;
     if (!cid) {
       const full = $("plName").value.trim(), area = $("plArea").value.trim();
-      if (!full || !area) return note(msg, "Search for the person, or enter a new person's name and neighborhood.", "err");
+      if (!full || !area) { done(false); return note(msg, "Search for the person, or enter a new person's name and neighborhood.", "err"); }
       cid = (await newContributor({ full, email: $("plEmail").value, address: $("plAddr").value.trim(), area, label: publicLabel(full, $("plShow").value) })).id;
     }
     const plan = $("plPlan").checked ? { installment: Number($("plInst").value), frequency: $("plFreq").value, payments: Number($("plCount").value) } : null;
@@ -291,19 +356,22 @@ $("plForm").addEventListener("submit", async (ev) => {
       const { error: e2 } = await sb.from("giving_plans").insert({ contributor_id: cid, pledge_id: pl.id, ...plan, method: "manual", start_on: date });
       if (e2) throw new Error(friendly(e2));
     }
+    done(true);
     note(msg, plan ? `Giving plan saved: ${plan.payments} payments of ${fmt(plan.installment)} (${fmt(amount)}). Record each payment as a deposit; it counts toward the plan.`
       : `Pledge of ${fmt(amount)} saved. It now shows in the ledger, statistics and reports.`);
     ["plAmt", "plName", "plEmail", "plAddr", "plArea", "plInst"].forEach((id) => { $(id).value = ""; });
     $("plPlan").checked = false; $("plPlanBox").hidden = true; $("plAmt").readOnly = false;
     plPick.set(null); loadTop();
-  } catch (e) { note(msg, e.message, "err"); }
+  } catch (e) { done(false); note(msg, e.message, "err"); }
 });
 
 $("rForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving deposit...");
   const msg = $("rMsg"), amount = Number($("rAmt").value), date = $("rDate").value;
-  if (!(amount > 0 && amount <= 2000000) || !date) return note(msg, "Enter the amount and the date received.", "err");
-  if (date > today()) return note(msg, "The date received can't be in the future.", "err");
+  if (!(amount > 0 && amount <= 2000000) || !date) { done(false); return note(msg, "Enter the amount and the date received.", "err"); }
+  if (date > today()) { done(false); return note(msg, "The date received can't be in the future.", "err"); }
   try {
     let c = rPick.get(), cid = c?.id || null, label = c?.public_label, area = c?.area || "";
     if (!c) {
@@ -317,19 +385,23 @@ $("rForm").addEventListener("submit", async (ev) => {
     if (error) throw new Error(friendly(error));
     let extra = "";
     if ($("rEmailReceipt").checked && cid) extra = " " + emailWord(await emailAbout("receipt", data.id));
+    done(true);
     note(msg, `Deposit of ${fmt(amount)} from ${label} saved and applied to any open pledge.${extra}`);
     ["rAmt", "rNote", "rLabel", "rArea", "rFull", "rEmail"].forEach((id) => { $(id).value = ""; });
     rPick.set(null); loadTop();
-  } catch (e) { note(msg, e.message, "err"); }
+  } catch (e) { done(false); note(msg, e.message, "err"); }
 });
 
 $("eForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving expense...");
   const msg = $("eMsg"), amount = Number($("eAmt").value), payee = $("ePayee").value.trim();
-  if (!(amount > 0) || !payee || !$("eDate").value) return note(msg, "Enter the date, amount and who was paid.", "err");
+  if (!(amount > 0) || !payee || !$("eDate").value) { done(false); return note(msg, "Enter the date, amount and who was paid.", "err"); }
   const status = $("eStatus").value;
   const { error } = await sb.from("expenses").insert({ spent_on: $("eDate").value, amount, payee, category: $("eCat").value, status, paid_on: status === "paid" ? $("eDate").value : null, description: $("eDesc").value.trim() });
-  if (error) return note(msg, friendly(error), "err");
+  if (error) { done(false); return note(msg, friendly(error), "err"); }
+  done(true);
   note(msg, `Expense of ${fmt(amount)} to ${payee} saved.`);
   ["eAmt", "ePayee", "eDesc"].forEach((id) => { $(id).value = ""; });
   loadTop();
@@ -438,18 +510,21 @@ async function openRefund(r) {
 $("rfCancel").addEventListener("click", () => { $("rfForm").hidden = true; });
 $("rfForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Issuing refund...");
   const r = refundTarget, msg = $("rfMsg"), amount = Math.round(Number($("rfAmt").value) * 100) / 100, reason = $("rfReason").value.trim();
-  if (!r || !(amount > 0) || amount > r.left) return note(msg, `Enter an amount up to ${fmt(r?.left || 0)}.`, "err");
+  if (!r || !(amount > 0) || amount > r.left) { done(false); return note(msg, `Enter an amount up to ${fmt(r?.left || 0)}.`, "err"); }
   if (r.method === "Online (Stripe)") {
     const { data: { session: s } } = await sb.auth.getSession();
     const res = await fetch("/api/refund", { method: "POST", headers: { authorization: "Bearer " + s.access_token, "content-type": "application/json" }, body: JSON.stringify({ receiptId: r.id, amount, reason }) });
     const d = await res.json().catch(() => ({}));
-    if (!res.ok) return note(msg, d.error || "The refund could not be made.", "err");
+    if (!res.ok) { done(false); return note(msg, d.error || "The refund could not be made.", "err"); }
   } else {
     const { data, error } = await sb.from("refunds").insert({ receipt_id: r.id, contributor_id: r.contributor_id, public_label: r.public_label, area: r.area, amount, kind: "refund", method: $("rfMethod").value, reason }).select("id").single();
-    if (error) return note(msg, friendly(error), "err");
+    if (error) { done(false); return note(msg, friendly(error), "err"); }
     if (r.contributor_id) await emailAbout("refund", data.id);
   }
+  done(true);
   $("rfForm").hidden = true; note($("status"), `Refund of ${fmt(amount)} to ${r.public_label} recorded.`, "");
   refresh();
 });
@@ -500,11 +575,14 @@ function openEdit(c) {
 $("cCancel").addEventListener("click", () => { $("cForm").hidden = true; });
 $("cForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Updating...");
   const email = $("cEmail").value.trim().toLowerCase();
-  if (!$("cName").value.trim() || !$("cLabel").value.trim()) return note($("cMsg"), "Name and public label are required.", "err");
-  if (email && !EMAIL.test(email)) return note($("cMsg"), "Enter a valid email, or leave it blank.", "err");
+  if (!$("cName").value.trim() || !$("cLabel").value.trim()) { done(false); return note($("cMsg"), "Name and public label are required.", "err"); }
+  if (email && !EMAIL.test(email)) { done(false); return note($("cMsg"), "Enter a valid email, or leave it blank.", "err"); }
   const { error } = await sb.from("contributors").update({ full_name: $("cName").value.trim(), email, address: $("cAddr").value.trim(), area: $("cArea").value.trim(), public_label: $("cLabel").value.trim() }).eq("id", editing.id);
-  if (error) return note($("cMsg"), friendly(error), "err");
+  if (error) { done(false); return note($("cMsg"), friendly(error), "err"); }
+  done(true);
   $("cForm").hidden = true; note($("status"), "Contributor updated. Public ledger lines now use the new label.", ""); refresh();
 });
 const mPick = makePicker("m", { allowNew: false });
@@ -516,10 +594,13 @@ function openMerge(c) {
 $("mCancel").addEventListener("click", () => { $("mForm").hidden = true; });
 $("mForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Combining...");
   const dst = mPick.get();
-  if (!dst || dst.id === mergeFrom.id) return note($("mMsg"), "Choose a different person to keep.", "err");
+  if (!dst || dst.id === mergeFrom.id) { done(false); return note($("mMsg"), "Choose a different person to keep.", "err"); }
   const { error } = await sb.rpc("merge_contributors", { src: mergeFrom.id, dst: dst.id });
-  if (error) return note($("mMsg"), friendly(error), "err");
+  if (error) { done(false); return note($("mMsg"), friendly(error), "err"); }
+  done(true);
   $("mForm").hidden = true; note($("status"), `Combined into ${dst.full_name}. All pledges and money moved.`, ""); refresh();
 });
 
@@ -585,12 +666,15 @@ $("nNew").addEventListener("click", () => editPost(null));
 $("nHead").addEventListener("input", () => { if (!editingPost) $("nSlug").value = slugify($("nHead").value); });
 $("nForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving post...");
   const title = $("nHead").value.trim(), slug = slugify($("nSlug").value || title);
-  if (title.length < 3) return note($("nMsg"), "Give the update a title.", "err");
-  if (!slug) return note($("nMsg"), "Give the update a web address (letters and numbers).", "err");
+  if (title.length < 3) { done(false); return note($("nMsg"), "Give the update a title.", "err"); }
+  if (!slug) { done(false); return note($("nMsg"), "Give the update a web address (letters and numbers).", "err"); }
   const row = { title, slug, published_on: $("nDate").value || today(), summary: $("nSummary").value.trim(), body: $("nBody").value, published: $("nPub").checked, updated_at: new Date().toISOString() };
   const { error } = editingPost ? await sb.from("posts").update(row).eq("id", editingPost.id) : await sb.from("posts").insert(row);
-  if (error) return note($("nMsg"), /duplicate|unique/i.test(error.message) ? "Another update already uses that web address." : friendly(error), "err");
+  if (error) { done(false); return note($("nMsg"), /duplicate|unique/i.test(error.message) ? "Another update already uses that web address." : friendly(error), "err"); }
+  done(true);
   note($("nMsg"), row.published ? "Saved and published. It appears on the Updates page within a minute." : "Saved as a draft.");
   editPost(null); loaders.news();
 });
@@ -686,15 +770,18 @@ loaders.team = async () => {
 $("tRole").addEventListener("change", () => { const dev = $("tRole").value === "developer"; $("tDevBox").hidden = !dev; $("tAdd").textContent = dev ? "Invite developer" : "Add team member"; });
 $("tForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving...");
   try {
     const dev = $("tRole").value === "developer";
     const r = await staffApi("POST", { email: $("tEmail").value.trim(), displayName: $("tName").value.trim(), role: $("tRole").value,
       ...(dev ? { days: Number($("tDays").value), purpose: $("tPurpose").value.trim() } : {}) });
+    done(true);
     note($("tMsg"), dev ? `Developer invited until ${new Date(r.accessExpiresAt).toLocaleString()}. They see system checks and the activity log only, and you can remove them at any time.`
       : "Added. They can now sign in at /admin/ with a code sent to their email.");
     $("tEmail").value = ""; $("tName").value = ""; $("tPurpose").value = "";
     loaders.team();
-  } catch (e) { note($("tMsg"), e.message, "err"); }
+  } catch (e) { done(false); note($("tMsg"), e.message, "err"); }
 });
 
 // ---------- SETTINGS ----------
@@ -737,26 +824,30 @@ loaders.settings = async () => {
 $("sForm").addEventListener("input", () => { $("sForm").dataset.touched = "1"; });
 $("sForm").addEventListener("submit", async (ev) => {
   ev.preventDefault();
+  const btn = ev.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Saving settings...");
   const msg = $("sMsg"), gfm = $("sGfm").value.trim();
-  if (gfm && !/^https:\/\//i.test(gfm)) return note(msg, "The GoFundMe link must start with https://", "err");
+  if (gfm && !/^https:\/\//i.test(gfm)) { done(false); return note(msg, "The GoFundMe link must start with https://", "err"); }
   const ms = [...$("goalRows").children].map((tr) => ({ amount: Number(String(tr.querySelector(".g-amt").value).replace(/[$,]/g, "")),
     title: tr.querySelector(".g-title").value.trim(), desc: tr.querySelector(".g-desc").value.trim() })).filter((m) => m.amount || m.title);
-  if (!ms.length || ms.some((m) => !(m.amount > 0) || !m.title)) return note(msg, "Each goal needs an amount and a title.", "err");
-  if (ms.length > 10) return note(msg, "Up to 10 goals.", "err");
+  if (!ms.length || ms.some((m) => !(m.amount > 0) || !m.title)) { done(false); return note(msg, "Each goal needs an amount and a title.", "err"); }
+  if (ms.length > 10) { done(false); return note(msg, "Up to 10 goals.", "err"); }
   const lim = { min_gift: Number($("sMin").value), max_gift: Number($("sMax").value), max_pledge: Number($("sMaxPledge").value), max_deposit: Number($("sMaxDep").value), max_plan_payments: Number($("sPlanMax").value) };
-  if (!(lim.min_gift >= 1 && lim.min_gift <= lim.max_gift && lim.max_gift <= 2000000 && lim.max_pledge >= lim.min_gift && lim.max_pledge <= 2000000 && lim.max_deposit >= 1 && lim.max_deposit <= 2000000))
-    return note(msg, "Check the limits: the smallest gift must be below the largest, and nothing above $2,000,000.", "err");
-  if (!(Number.isInteger(lim.max_plan_payments) && lim.max_plan_payments >= 2 && lim.max_plan_payments <= 120)) return note(msg, "A plan can have 2 to 120 payments.", "err");
+  if (!(lim.min_gift >= 1 && lim.min_gift <= lim.max_gift && lim.max_gift <= 2000000 && lim.max_pledge >= lim.min_gift && lim.max_pledge <= 2000000 && lim.max_deposit >= 1 && lim.max_deposit <= 2000000)) {
+    done(false); return note(msg, "Check the limits: the smallest gift must be below the largest, and nothing above $2,000,000.", "err");
+  }
+  if (!(Number.isInteger(lim.max_plan_payments) && lim.max_plan_payments >= 2 && lim.max_plan_payments <= 120)) { done(false); return note(msg, "A plan can have 2 to 120 payments.", "err"); }
   const amounts = $("sAmounts").value.split(/[,\s]+/).map((x) => Number(x.replace(/[$]/g, ""))).filter((x) => x > 0);
-  if (!amounts.length || amounts.length > 8 || amounts.some((a) => a > 2000000)) return note(msg, "Enter 1 to 8 suggested amounts.", "err");
+  if (!amounts.length || amounts.length > 8 || amounts.some((a) => a > 2000000)) { done(false); return note(msg, "Enter 1 to 8 suggested amounts.", "err"); }
   const reg = $("sReg").value.trim().toUpperCase();
-  if (reg && !/^[A-Z]{1,3}[0-9]{2,8}$/.test(reg)) return note(msg, "The registration number should look like CH12345.", "err");
-  if ($("sOnline").checked && !reg) return note(msg, "Enter the FDACS registration number before opening online payments.", "err");
+  if (reg && !/^[A-Z]{1,3}[0-9]{2,8}$/.test(reg)) { done(false); return note(msg, "The registration number should look like CH12345.", "err"); }
+  if ($("sOnline").checked && !reg) { done(false); return note(msg, "Enter the FDACS registration number before opening online payments.", "err"); }
   const { error } = await sb.from("settings").update({ org_name: $("sOrg").value.trim(), fdacs_reg: reg, gofundme_url: gfm,
     accept_online: $("sOnline").checked, milestones: ms.sort((a, b) => a.amount - b.amount), ...lim, allow_plans: $("sPlans").checked,
     suggested_amounts: [...new Set(amounts)].sort((a, b) => a - b), prompts_enabled: $("sPrompts").checked, prompt_headline: $("sHeadline").value.trim(),
     goal_deadline: $("sDeadline").value || null, updated_at: new Date().toISOString() }).eq("id", 1);
-  if (error) return note(msg, friendly(error), "err");
+  if (error) { done(false); return note(msg, friendly(error), "err"); }
+  done(true);
   delete $("sForm").dataset.touched; note(msg, "Settings saved. The public site updates within a minute.");
   loadTop();
 });
