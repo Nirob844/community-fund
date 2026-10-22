@@ -105,7 +105,7 @@ export async function run(base, f = fetch) {
   return results;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (process.argv[1] && (import.meta.url === `file://${process.argv[1]}` || import.meta.url === `file:///${process.argv[1].replace(/\\/g, "/")}`)) {
   const url = process.argv[2];
   if (!url) { console.error("Usage: node scripts/verify-deploy.mjs https://yourfund.org"); process.exit(2); }
   const results = await run(url);

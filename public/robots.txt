@@ -5,4 +5,4 @@ Disallow: /api/
 Disallow: /share/
 Disallow: /thanks/
 
-Sitemap: https://example.org/sitemap.xml
+Sitemap: https://prospectroadfund.netlify.app/sitemap.xml

@@ -53,12 +53,12 @@
 
 # Force HTTPS on the apex and www
 [[redirects]]
-  from = "http://example.org/*"
-  to = "https://example.org/:splat"
+  from = "http://prospectroadfund.netlify.app/*"
+  to = "https://prospectroadfund.netlify.app/:splat"
   status = 301
   force = true
 [[redirects]]
-  from = "https://www.example.org/*"
-  to = "https://example.org/:splat"
+  from = "https://www.prospectroadfund.netlify.app/*"
+  to = "https://prospectroadfund.netlify.app/:splat"
   status = 301
   force = true

@@ -3,14 +3,14 @@
 > A volunteer-run community fund in Manatee County, Florida. It pays for a land use attorney to ask the county to correct its Live Local Act eligibility finding for a proposed 642-unit project on Prospect Road, and has a long-term target of $2,000,000 to buy the land for a community park. All income and expenses are published.
 
 ## Pages
-- [Home and pledge](https://example.org/): milestones, neighborhood totals, pledge form, FAQ
-- [Transparency](https://example.org/transparency/): ledger, income statement, balance sheet, refund shares
-- [Statistics](https://example.org/stats/): contributions by community, over time, by size and method, and spending
-- [Updates](https://example.org/updates/): dated news from the volunteer team
-- [The Live Local Act](https://example.org/live-local-act/): plain-language explainer and why residents believe the site does not qualify
-- [Park vision](https://example.org/park/): the plan for a community nature park and the $2M target
-- [Privacy](https://example.org/privacy/): what is collected and who can see it
+- [Home and pledge](https://prospectroadfund.netlify.app/): milestones, neighborhood totals, pledge form, FAQ
+- [Transparency](https://prospectroadfund.netlify.app/transparency/): ledger, income statement, balance sheet, refund shares
+- [Statistics](https://prospectroadfund.netlify.app/stats/): contributions by community, over time, by size and method, and spending
+- [Updates](https://prospectroadfund.netlify.app/updates/): dated news from the volunteer team
+- [The Live Local Act](https://prospectroadfund.netlify.app/live-local-act/): plain-language explainer and why residents believe the site does not qualify
+- [Park vision](https://prospectroadfund.netlify.app/park/): the plan for a community nature park and the $2M target
+- [Privacy](https://prospectroadfund.netlify.app/privacy/): what is collected and who can see it
 
 ## Data
-- [Public ledger JSON](https://example.org/api/ledger): de-identified totals, receipts and expenses
-- [Full ledger CSV](https://example.org/api/ledger-csv): every public entry
+- [Public ledger JSON](https://prospectroadfund.netlify.app/api/ledger): de-identified totals, receipts and expenses
+- [Full ledger CSV](https://prospectroadfund.netlify.app/api/ledger-csv): every public entry
