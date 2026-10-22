@@ -1,3 +1,7 @@
+if (new URLSearchParams(location.search).has("code")) {
+  location.replace("/admin/" + location.search);
+}
+
 import { $, h, fill, fmt, live, renderTiles, renderScale, renderAreas, wireChartTooltip, renderFooterLegal } from "./common.js";
 import { goalPrompts, giftImpact, suggestedAmounts } from "./prompts.js";
 
