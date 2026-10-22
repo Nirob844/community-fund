@@ -285,7 +285,13 @@
           <button class="btn" type="button" id="clFinish">3. Mark the fund closed</button>
           <button class="btn ghost" type="button" id="clReopen">Reopen the fund</button>
         </div>
-        <div class="field" data-need="treasurer"><label for="clNote">Public closing note</label><input id="clNote" maxlength="500" placeholder="e.g. The board approved the final payout plan on 1 March 2027."></div>
+        <div class="field" data-need="treasurer">
+          <label for="clNote">Public closing note</label>
+          <div class="input-with-btn">
+            <input id="clNote" maxlength="500" placeholder="e.g. The board approved the final payout plan on 1 March 2027.">
+            <button class="btn ghost" type="button" id="clNoteSave">Save note</button>
+          </div>
+        </div>
         <div class="tablewrap block"><table><thead><tr><th>Contributor</th><th>Email</th><th class="r">Contributed</th><th class="r">Share</th><th class="r">Due</th><th class="r">Paid</th><th class="r">Remaining</th><th></th></tr></thead><tbody id="planRows"></tbody></table></div>
         <p class="hint" id="planNote"></p>
       </div>

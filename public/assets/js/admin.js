@@ -621,7 +621,9 @@ loaders.closing = async () => {
   if (error) return note($("status"), friendly(error), "err");
   plan = data || [];
   const st = settings?.fund_status || "open";
-  $("clStatus").textContent = { open: "Open", closing: "Closing", closed: "Closed" }[st];
+  const pillCls = st === "open" ? "pill ok" : (st === "closing" ? "pill pend" : "pill due");
+  const stText = { open: "Open", closing: "Closing", closed: "Closed" }[st] || st;
+  fill($("clStatus"), h("span", { class: pillCls }, stText));
   $("clPool").textContent = fmt(Number(t?.closingPool || 0)); $("clPaid").textContent = fmt(Number(t?.payouts || 0));
   $("clNote").value = settings?.closing_note || "";
   $("clStart").hidden = st !== "open"; $("clFinish").hidden = st !== "closing"; $("clReopen").hidden = st === "open";
@@ -648,7 +650,13 @@ loaders.closing = async () => {
 };
 const setStatus = async (fund_status, extra = {}) => {
   const { error } = await sb.from("settings").update({ fund_status, closing_note: $("clNote").value.trim(), updated_at: new Date().toISOString(), ...extra }).eq("id", 1);
-  if (error) note($("status"), friendly(error), "err"); else $("status").hidden = true;
+  if (error) {
+    note($("status"), friendly(error), "err");
+    showToast(friendly(error), "err");
+  } else {
+    $("status").hidden = true;
+    showToast(`Fund status updated to ${fund_status}`, "ok");
+  }
   loaders.closing();
 };
 $("clStart").addEventListener("click", (e) => confirmAct(e.currentTarget, "Stop accepting new pledges?", () => setStatus("closing"), () => {}));
@@ -656,6 +664,19 @@ $("clFinish").addEventListener("click", (e) => confirmAct(e.currentTarget, "Mark
 $("clReopen").addEventListener("click", (e) => confirmAct(e.currentTarget, "Reopen the fund?", () => setStatus("open", { closed_on: null }), () => {}));
 $("clCsv").addEventListener("click", () => csvDownload(`payout-plan-${today()}.csv`, [["contributor", "email", "area", "contributed", "share_percent", "due", "paid_out", "remaining"],
   ...plan.map((r) => [r.full_name || r.label, r.email || "", r.area, Number(r.contributed), Number((Number(r.share) * 100).toFixed(4)), Number(r.due), Number(r.paid_out), Number(r.remaining)])]));
+$("clNoteSave")?.addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  setBtnLoading(btn, "Saving…");
+  try {
+    const { error } = await sb.from("settings").update({ closing_note: $("clNote").value.trim(), updated_at: new Date().toISOString() }).eq("id", 1);
+    if (error) throw error;
+    showToast("Closing note saved", "ok");
+  } catch (err) {
+    showToast(friendly(err), "err");
+  } finally {
+    setBtnLoading(btn, false);
+  }
+});
 
 // ---------- UPDATES (news) ----------
 let editingPost = null;
