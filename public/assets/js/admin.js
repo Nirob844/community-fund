@@ -178,19 +178,29 @@ if (!cfg.supabaseUrl || !cfg.supabaseAnonKey) {
 
 $("emailForm").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Sending code...");
   const email = $("aEmail").value.trim();
-  if (!EMAIL.test(email)) return note($("authMsg"), "Enter a valid email address.", "err");
+  if (!EMAIL.test(email)) { done(false); return note($("authMsg"), "Enter a valid email address.", "err"); }
   const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+  done(!error);
   $("codeForm").hidden = false; $("aCode").focus();
   note($("authMsg"), error && /rate/i.test(error.message) ? "Too many requests. Wait a minute and try again." : "If that email belongs to a team member, a 6-digit code is on its way.");
 });
 $("codeForm").addEventListener("submit", async (e) => {
   e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const done = setBtnLoading(btn, "Signing in...");
   const { error } = await sb.auth.verifyOtp({ email: $("aEmail").value.trim(), token: $("aCode").value.trim(), type: "email" });
-  if (error) return note($("authMsg"), "That code didn't work or has expired. Request a new one.", "err");
+  if (error) { done(false); return note($("authMsg"), "That code didn't work or has expired. Request a new one.", "err"); }
+  done(true);
   boot();
 });
-$("signOut").addEventListener("click", async () => { try { await sb.rpc("log_activity", { act: "client.sign_out", info: { page: "admin" } }); } catch {} sb.auth.signOut(); });
+$("signOut").addEventListener("click", async (e) => {
+  const done = setBtnLoading(e.currentTarget, "Signing out...");
+  try { await sb.rpc("log_activity", { act: "client.sign_out", info: { page: "admin" } }); } catch {}
+  sb.auth.signOut();
+});
 
 async function boot() {
   ({ data: { session } } = await sb.auth.getSession());

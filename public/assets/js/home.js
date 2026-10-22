@@ -120,7 +120,11 @@ $("pledgeForm").addEventListener("submit", async (ev) => {
   if (!(body.amount >= L.minGift && body.amount <= max)) return note(msg, `Please enter ${plan ? "a payment" : "a pledge"} between ${fmt(L.minGift)} and ${fmt(max)}.`, "err");
   if (plan && !(Number.isInteger(body.plan.payments) && body.plan.payments >= 2 && body.plan.payments <= L.maxPlanPayments)) return note(msg, `Choose between 2 and ${L.maxPlanPayments} payments.`, "err");
   if (!$("pConsent").checked) return note(msg, "Please tick the box to confirm you have read the privacy notice.", "err");
-  btn.disabled = true; note(msg, "Saving your pledge…");
+  const origBtn = btn.textContent;
+  btn.disabled = true;
+  btn.classList.add("loading");
+  btn.replaceChildren(h("span", { className: "spin" }), document.createTextNode(" Saving your pledge…"));
+  note(msg, "Saving your pledge…");
   try {
     const r = await fetch("/api/pledge", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
     const data = await r.json().catch(() => ({}));
@@ -143,6 +147,8 @@ $("pledgeForm").addEventListener("submit", async (ev) => {
     note(msg, e.message, "err");
   } finally {
     btn.disabled = false;
+    btn.classList.remove("loading");
+    btn.textContent = origBtn;
     if (turnstileId != null && window.turnstile) window.turnstile.reset(turnstileId);
   }
 });
