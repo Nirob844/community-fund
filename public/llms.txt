@@ -7,6 +7,7 @@
 - [Transparency](https://prospectroadfund.netlify.app/transparency/): ledger, income statement, balance sheet, refund shares
 - [Statistics](https://prospectroadfund.netlify.app/stats/): contributions by community, over time, by size and method, and spending
 - [Updates](https://prospectroadfund.netlify.app/updates/): dated news from the volunteer team
+- [Blog](https://prospectroadfund.netlify.app/blog/): stories, dispatches, videos and media from SMARTManatee
 - [The Live Local Act](https://prospectroadfund.netlify.app/live-local-act/): plain-language explainer and why residents believe the site does not qualify
 - [Park vision](https://prospectroadfund.netlify.app/park/): the plan for a community nature park and the $2M target
 - [Privacy](https://prospectroadfund.netlify.app/privacy/): what is collected and who can see it

@@ -7,9 +7,8 @@
 <meta name="description" content="Treasurer console.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://prospectroadfund.netlify.app/admin/">
-<meta name="theme-color" content="#1d4f97" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0b2550" media="(prefers-color-scheme: dark)">
-<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1F5C45">
+<meta name="color-scheme" content="light">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Prospect Road Community Fund">
@@ -39,139 +38,367 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
-<header class="topbar gutter"><div class="wrap">
-  <a class="brand" href="/"><svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4f97"/><stop offset=".7" stop-color="#a9cdf0"/><stop offset="1" stop-color="#f4a65c"/></linearGradient></defs><rect width="32" height="32" rx="8" fill="url(#lg)"/><circle cx="16" cy="22" r="7" fill="#ffe2a8"/><path d="M0 23c5-3 9-3 13-1s9 2 19-2v12H0z" fill="#1f5a3f"/></svg><span>Prospect Road Community Fund</span></a>
-  <nav class="topnav" aria-label="Main"><a href="/">Home</a><a href="/transparency/">Transparency</a><a href="/stats/">Stats</a><a href="/#pledge">Pledge</a><a href="/updates/">Updates</a></nav>
+<header class="site-header gutter"><div class="wrap header-row">
+  <a class="brand" href="/" aria-label="SMART Manatee home">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#1F5C45"/><path d="M7 26c5-6 9-6 13 0s8 6 13 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M12 17l8-7 8 7" stroke="#F2B48C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div>
+      <span class="brand-name">SMART Manatee</span>
+      <span class="brand-sub">Southern Manatee Association for Responsible Transition</span>
+    </div>
+  </a>
+  <nav class="nav" aria-label="Main">
+    <a href="/">Home</a>
+    <a href="/about/">About</a>
+    <a href="/town-halls/">Town Halls</a>
+    <a href="/blog/">Blog</a>
+    <a href="/transparency/">Transparency</a>
+    <a href="/stats/">Stats</a>
+    <a href="/faq/">FAQ</a>
+    <a class="btn" href="/donate/">Donate</a>
+  </nav>
 </div></header>
 
-<div class="hero short gutter" role="presentation">
-  <div class="cloud c1"></div><div class="cloud c2"></div><div class="sunglow"></div>
-  <div class="wrap">
+<div class="gutter">
+  <div class="wrap page-head">
+    <div class="crumbs"><a href="/">Home</a> / Staff Console</div>
     <p class="eyebrow">Treasurer</p>
     <h1>Staff console</h1>
     <p class="lede" id="who">Sign in with your staff email.</p>
   </div>
-  <svg class="ridge" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 46C80 30 140 34 200 40C260 20 300 18 340 32C400 12 450 14 500 30C560 24 600 36 660 30C720 8 780 10 830 28C890 22 930 34 990 26C1050 14 1110 20 1200 34L1200 70L0 70Z"/></svg>
 </div>
 
 <main id="main" class="gutter"><div class="wrap">
   <div id="status" class="note err" hidden role="alert"></div>
-  <section class="card" id="auth">
-    <h2>Staff sign-in</h2>
-    <p class="sub">Sign in with your staff email and password, or request an email code.</p>
+  <section class="card auth-card" id="auth">
+    <div class="auth-header">
+      <div class="auth-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1F5C45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h2>Staff Sign-In</h2>
+      <p class="sub">Sign in with your staff email and password.</p>
+    </div>
+
+    <!-- Password Login Form -->
     <form id="passForm">
-      <div class="field"><label for="pEmail">Your staff email</label><input id="pEmail" type="email" autocomplete="email" required></div>
-      <div class="field"><label for="pPass">Password</label><input id="pPass" type="password" autocomplete="current-password" required></div>
-      <div class="btnrow"><button class="btn" type="submit">Sign in</button><button class="btn ghost" type="button" id="useOtp">Sign in with email code instead</button></div>
+      <div class="field">
+        <label for="pEmail">Staff email address</label>
+        <input id="pEmail" type="email" autocomplete="email" placeholder="name@example.org" required>
+      </div>
+      <div class="field">
+        <div class="label-row">
+          <label for="pPass">Password</label>
+          <button type="button" class="link-btn" id="forgotPassBtn">Forgot password?</button>
+        </div>
+        <div class="input-eye-wrap">
+          <input id="pPass" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+          <button type="button" class="eye-btn" data-toggle="pPass" aria-label="Toggle password visibility">
+            <svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="remember-row">
+        <label class="consent-check"><input type="checkbox" id="rememberEmail" checked><span>Remember my email</span></label>
+      </div>
+      <div class="btnrow auth-btnrow">
+        <button class="btn full-width" type="submit">Sign in</button>
+        <button class="btn ghost full-width" type="button" id="useOtp">Sign in with email code instead</button>
+      </div>
     </form>
+
+    <!-- Email OTP Form -->
     <form id="emailForm" hidden>
-      <div class="field"><label for="aEmail">Your staff email</label><input id="aEmail" type="email" autocomplete="email" required></div>
-      <div class="btnrow"><button class="btn" type="submit">Email me a sign-in code</button><button class="btn ghost" type="button" id="usePass">Sign in with password instead</button></div>
+      <div class="field">
+        <label for="aEmail">Staff email address</label>
+        <input id="aEmail" type="email" autocomplete="email" placeholder="name@example.org" required>
+      </div>
+      <div class="btnrow auth-btnrow">
+        <button class="btn full-width" type="submit">Email me a sign-in code</button>
+        <button class="btn ghost full-width" type="button" id="usePass">Sign in with password instead</button>
+      </div>
     </form>
+
+    <!-- 6-digit OTP Code Form -->
     <form id="codeForm" hidden>
-      <div class="field"><label for="aCode">6-digit code</label><input id="aCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" required></div>
-      <button class="btn" type="submit">Sign in</button>
+      <div class="field">
+        <label for="aCode">6-digit email code</label>
+        <input id="aCode" inputmode="numeric" autocomplete="one-time-code" maxlength="10" placeholder="123456" required>
+      </div>
+      <div class="btnrow auth-btnrow">
+        <button class="btn full-width" type="submit">Verify &amp; sign in</button>
+        <button class="btn ghost full-width" type="button" id="backToPass">Back to password sign-in</button>
+      </div>
     </form>
+
+    <!-- Forgot Password Form -->
+    <form id="forgotForm" hidden>
+      <div class="field">
+        <label for="fEmail">Your staff email address</label>
+        <input id="fEmail" type="email" autocomplete="email" placeholder="name@example.org" required>
+      </div>
+      <div class="btnrow auth-btnrow">
+        <button class="btn full-width" type="submit">Send password reset email</button>
+        <button class="btn ghost full-width" type="button" id="cancelForgot">Cancel &amp; return to sign-in</button>
+      </div>
+    </form>
+
     <div id="authMsg" class="note" hidden role="status"></div>
   </section>
 
-  <div id="console" hidden>
-    <div class="staffbar"><span id="roleBadge" class="pill"></span><span class="hint">Entries update the public ledger, statistics and statements within a minute.</span><button class="btn small ghost" id="signOut" type="button">Sign out</button></div>
-    <div class="summary staff-sum" id="staffSum" aria-label="Fund totals">
-      <div class="tile hl"><div class="k">Cash on hand</div><div class="v" id="tCash">—</div></div>
-      <div class="tile"><div class="k">Received (after refunds)</div><div class="v" id="tRec">—</div></div>
-      <div class="tile"><div class="k">Pledged, not yet received</div><div class="v" id="tOut">—</div></div>
-      <div class="tile"><div class="k">Spent</div><div class="v" id="tExp">—</div></div>
-    </div>
-    <div id="fundBanner" class="note warn" hidden></div>
-    <div id="issueBanner" class="note warn" hidden role="status"></div>
+  <div id="console" hidden class="dash-shell">
+    <!-- MOBILE BACKDROP -->
+    <div class="dash-backdrop" id="dashBackdrop"></div>
 
-    <nav class="tabs ctabs" role="tablist" aria-label="Console sections">
-      <button role="tab" data-ctab="record" data-need="recorder" aria-selected="true">Record</button>
-      <button role="tab" data-ctab="pledges" aria-selected="false">Pledges</button>
-      <button role="tab" data-ctab="money" aria-selected="false">Money in and out</button>
-      <button role="tab" data-ctab="people" aria-selected="false">People</button>
-      <button role="tab" data-ctab="closing" aria-selected="false">Closing</button>
-      <button role="tab" data-ctab="news" data-need="treasurer" aria-selected="false">Updates</button>
-      <button role="tab" data-ctab="records" aria-selected="false">Audit and exports</button>
-      <button role="tab" data-ctab="team" data-need="treasurer" aria-selected="false">Team</button>
-      <button role="tab" data-ctab="settings" data-need="treasurer" aria-selected="false">Settings</button>
-      <button role="tab" data-ctab="system" data-roles="treasurer auditor developer" aria-selected="false">System and activity</button>
-    </nav>
+    <!-- SIDEBAR -->
+    <aside class="dash-sidebar" id="dashSidebar">
+      <div class="dash-sidebar-header">
+        <a class="dash-brand" href="/" aria-label="SMART Manatee homepage">
+          <div class="dash-logo-icon">
+            <svg width="32" height="32" viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="9" fill="#1F5C45"/><path d="M7 26c5-6 9-6 13 0s8 6 13 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M12 17l8-7 8 7" stroke="#F2B48C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="dash-brand-text">
+            <span class="dash-brand-title">SMART Manatee</span>
+            <span class="dash-brand-sub">Staff Console</span>
+          </div>
+        </a>
+        <a href="/" target="_blank" class="dash-ext-link" title="Open public website in a new tab">
+          <span>Website</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+
+      <!-- SIDEBAR NAV (Preserves .ctabs and [data-ctab]) -->
+      <nav class="dash-nav ctabs" role="tablist" aria-label="Console navigation">
+        <div class="dash-nav-group-label">Core Operations</div>
+        <button role="tab" data-ctab="record" data-need="recorder" aria-selected="true" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          <span>Quick Record</span>
+        </button>
+        <button role="tab" data-ctab="pledges" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          <span>Pledges &amp; Plans</span>
+        </button>
+        <button role="tab" data-ctab="money" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          <span>Money In &amp; Out</span>
+        </button>
+        <button role="tab" data-ctab="people" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Contributors</span>
+        </button>
+
+        <div class="dash-nav-group-label">Communications &amp; Audit</div>
+        <button role="tab" data-ctab="news" data-need="treasurer" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
+          <span>Blog &amp; Updates</span>
+        </button>
+        <button role="tab" data-ctab="records" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Audit &amp; Exports</span>
+        </button>
+        <button role="tab" data-ctab="closing" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+          <span>Fund Closing</span>
+        </button>
+
+        <div class="dash-nav-group-label">Settings &amp; System</div>
+        <button role="tab" data-ctab="team" data-need="treasurer" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          <span>Team Management</span>
+        </button>
+        <button role="tab" data-ctab="settings" data-need="treasurer" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Fund Settings</span>
+        </button>
+        <button role="tab" data-ctab="system" data-roles="treasurer auditor developer" aria-selected="false" class="dash-nav-btn">
+          <svg class="dash-nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>System &amp; Health</span>
+        </button>
+      </nav>
+
+      <!-- SIDEBAR USER FOOTER -->
+      <div class="dash-user-card">
+        <div class="dash-avatar" id="dashAvatar">NH</div>
+        <div class="dash-user-meta">
+          <div class="dash-user-name" id="dashUserName">Nirob Hossain</div>
+          <span id="roleBadge" class="pill role-treasurer">Treasurer</span>
+        </div>
+        <button class="dash-signout-btn" id="signOut" type="button" title="Sign out" aria-label="Sign out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WORKSPACE AREA -->
+    <div class="dash-main">
+      <!-- TOPBAR -->
+      <header class="dash-topbar">
+        <div class="dash-topbar-left">
+          <button class="dash-menu-toggle" id="dashMenuToggle" type="button" aria-label="Toggle navigation menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="dash-topbar-headings">
+            <h1 class="dash-section-title" id="dashCurrentTitle">Quick Record</h1>
+            <span class="dash-sync-badge"><span class="pulse-dot"></span> Live ledger synced</span>
+          </div>
+        </div>
+        <div class="dash-topbar-right">
+          <span class="dash-status-indicator">● Accepting Contributions</span>
+          <span class="dash-email-badge" id="who">nirobhossainalip@gmail.com</span>
+        </div>
+      </header>
+
+      <!-- HIDDEN BACKWARD-COMPATIBILITY ANCHOR -->
+      <div class="staffbar" hidden><span class="hint"></span></div>
+
+      <!-- DASHBOARD BODY CONTAINER -->
+      <div class="dash-body">
+        <div id="fundBanner" class="note warn" hidden></div>
+        <div id="issueBanner" class="note warn" hidden role="status"></div>
+
+        <!-- KPI SUMMARY GRID -->
+        <div class="dash-kpis staff-sum" id="staffSum" aria-label="Fund totals">
+          <div class="dash-kpi-card tile hl">
+            <div class="dash-kpi-top">
+              <span class="k">Cash on hand</span>
+              <div class="dash-kpi-icon icon-cash">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg>
+              </div>
+            </div>
+            <div class="v" id="tCash">—</div>
+            <div class="dash-kpi-sub">Available balance in bank</div>
+          </div>
+
+          <div class="dash-kpi-card tile">
+            <div class="dash-kpi-top">
+              <span class="k">Received (after refunds)</span>
+              <div class="dash-kpi-icon icon-rec">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              </div>
+            </div>
+            <div class="v" id="tRec">—</div>
+            <div class="dash-kpi-sub">Deposits &amp; card gifts</div>
+          </div>
+
+          <div class="dash-kpi-card tile">
+            <div class="dash-kpi-top">
+              <span class="k">Pledged, not yet received</span>
+              <div class="dash-kpi-icon icon-out">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+              </div>
+            </div>
+            <div class="v" id="tOut">—</div>
+            <div class="dash-kpi-sub">Open pledges to collect</div>
+          </div>
+
+          <div class="dash-kpi-card tile">
+            <div class="dash-kpi-top">
+              <span class="k">Spent</span>
+              <div class="dash-kpi-icon icon-exp">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+            </div>
+            <div class="v" id="tExp">—</div>
+            <div class="dash-kpi-sub">Legal, filing &amp; expenses</div>
+          </div>
+        </div>
 
     <!-- RECORD -->
     <section data-cpanel="record" data-need="recorder">
-      <div class="grid2">
-        <div class="card">
-          <h2>Record a pledge</h2>
-          <p class="sub">For pledges made in person, by phone or on paper.</p>
-          <form id="plForm" novalidate>
-            <div class="field picker">
-            <label for="plFind">Contributor</label>
-            <input id="plFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="plResults">
-            <ul class="pick-results" id="plResults" role="listbox" aria-label="Matching contributors" hidden></ul>
-            <div class="chosen" id="plChosen">New contributor</div>
-          </div>
-            <div id="plNew">
-              <div class="row">
-                <div class="field"><label for="plName">Full name</label><input id="plName" maxlength="80"></div>
-                <div class="field"><label for="plEmail">Email (optional)</label><input id="plEmail" type="email" maxlength="120"></div>
-              </div>
-              <div class="field"><label for="plAddr">Street address (private)</label><input id="plAddr" maxlength="160"></div>
-              <div class="row">
-                <div class="field"><label for="plArea">Neighborhood</label><input id="plArea" list="areasA" maxlength="60"></div>
-                <div class="field"><label for="plShow">Show publicly as</label><select id="plShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select></div>
-              </div>
-            </div>
-            <label class="hint consent"><input type="checkbox" id="plPlan"><span>Paid in smaller amounts over time (giving plan)</span></label>
-            <div class="row" id="plPlanBox" hidden>
-              <div class="field"><label for="plInst">Each payment</label><input id="plInst" type="number" min="1" step="0.01"></div>
-              <div class="field"><label for="plFreq">How often</label><select id="plFreq"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="quarterly">Every 3 months</option></select></div>
-              <div class="field"><label for="plCount">Number of payments</label><input id="plCount" type="number" min="2" max="120" step="1" value="6"></div>
-            </div>
-            <div class="row">
-              <div class="field"><label for="plAmt">Pledge amount</label><input id="plAmt" type="number" min="1" max="2000000" step="0.01" required></div>
-              <div class="field"><label for="plDate">Date pledged</label><input id="plDate" type="date" required></div>
-            </div>
-            <button class="btn" type="submit">Save pledge</button>
-            <div id="plMsg" class="note" hidden role="status"></div>
-          </form>
+      <div class="quick-rec-top">
+        <div class="rec-switcher" id="recSwitcher" role="tablist" aria-label="Select Record Action">
+          <button type="button" class="rec-tab-btn active" data-rec-view="deposit" role="tab" aria-selected="true">
+            <span class="tab-ico">💰</span> Record Deposit
+          </button>
+          <button type="button" class="rec-tab-btn" data-rec-view="pledge" role="tab" aria-selected="false">
+            <span class="tab-ico">🤝</span> Record Pledge
+          </button>
+          <button type="button" class="rec-tab-btn" data-rec-view="expense" data-need="treasurer" role="tab" aria-selected="false">
+            <span class="tab-ico">🧾</span> Record Expense
+          </button>
         </div>
-        <div class="card">
+      </div>
+
+      <!-- RECORD DEPOSIT FORM -->
+      <div class="card rec-card" id="recDepositCard">
+        <div class="rec-card-head">
           <h2>Record a deposit received</h2>
-          <p class="sub">Checks, cash, Zelle, bank transfers and GoFundMe payouts. Applied to the person's open pledges automatically.</p>
-          <form id="rForm" novalidate>
-            <div class="field picker">
+          <p class="sub">Checks, cash, Zelle, bank transfers and GoFundMe payouts. Applied to open pledges automatically.</p>
+        </div>
+        <form id="rForm" novalidate>
+          <div class="field picker">
             <label for="rFind">Received from</label>
             <input id="rFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="rResults">
             <ul class="pick-results" id="rResults" role="listbox" aria-label="Matching contributors" hidden></ul>
             <div class="chosen" id="rChosen">New contributor</div>
           </div>
-            <div id="rNew" class="row">
-              <div class="field"><label for="rFull">Full name (private, optional)</label><input id="rFull" maxlength="80"></div>
-              <div class="field"><label for="rLabel">Public label</label><input id="rLabel" placeholder="Blank = Anonymous neighbor" maxlength="60"></div>
-              <div class="field"><label for="rArea">Neighborhood</label><input id="rArea" list="areasA" maxlength="60"></div>
-              <div class="field"><label for="rEmail">Email (optional)</label><input id="rEmail" type="email" maxlength="120"></div>
-            </div>
-            <div id="rOwed" class="hint" hidden></div>
-            <div class="field" id="rPlanBox" hidden><label for="rPlan">Apply to a giving plan</label><select id="rPlan"></select></div>
-            <div class="row">
-              <div class="field"><label for="rAmt">Amount</label><input id="rAmt" type="number" min="0.01" max="2000000" step="0.01" required></div>
-              <div class="field"><label for="rDate">Date received</label><input id="rDate" type="date" required></div>
-            </div>
-            <div class="row">
-              <div class="field"><label for="rMethod">Method</label><select id="rMethod"><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div>
-              <div class="field"><label for="rNote">Check number or reference (private)</label><input id="rNote" maxlength="80"></div>
-            </div>
-            <div class="field"><label for="rDep">Bank deposit slip or batch (private)</label><input id="rDep" maxlength="80" placeholder="e.g. DEP-2026-10-16"></div>
-            <label class="hint consent"><input type="checkbox" id="rEmailReceipt" checked><span>Email a receipt to the contributor (if we have their email)</span></label>
-            <button class="btn" type="submit">Save deposit</button>
-            <div id="rMsg" class="note" hidden role="status"></div>
-          </form>
-        </div>
+          <div id="rNew" class="row">
+            <div class="field"><label for="rFull">Full name (private, optional)</label><input id="rFull" maxlength="80"></div>
+            <div class="field"><label for="rLabel">Public label</label><input id="rLabel" placeholder="Blank = Anonymous neighbor" maxlength="60"></div>
+            <div class="field"><label for="rArea">Neighborhood</label><input id="rArea" list="areasA" maxlength="60"></div>
+            <div class="field"><label for="rEmail">Email (optional)</label><input id="rEmail" type="email" maxlength="120"></div>
+          </div>
+          <div id="rOwed" class="hint" hidden></div>
+          <div class="field" id="rPlanBox" hidden><label for="rPlan">Apply to a giving plan</label><select id="rPlan"></select></div>
+          <div class="row">
+            <div class="field"><label for="rAmt">Amount</label><input id="rAmt" type="number" min="0.01" max="2000000" step="0.01" required></div>
+            <div class="field"><label for="rDate">Date received</label><input id="rDate" type="date" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="rMethod">Method</label><select id="rMethod"><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div>
+            <div class="field"><label for="rNote">Check number or reference (private)</label><input id="rNote" maxlength="80"></div>
+          </div>
+          <div class="field"><label for="rDep">Bank deposit slip or batch (private)</label><input id="rDep" maxlength="80" placeholder="e.g. DEP-2026-10-16"></div>
+          <label class="hint consent"><input type="checkbox" id="rEmailReceipt" checked><span>Email a receipt to the contributor (if we have their email)</span></label>
+          <button class="btn" type="submit">Save deposit</button>
+          <div id="rMsg" class="note" hidden role="status"></div>
+        </form>
       </div>
-      <div class="card block" data-need="treasurer">
-        <h2>Record an expense</h2>
+
+      <!-- RECORD PLEDGE FORM -->
+      <div class="card rec-card" id="recPledgeCard" hidden>
+        <div class="rec-card-head">
+          <h2>Record a pledge</h2>
+          <p class="sub">For pledges made in person, by phone or on paper.</p>
+        </div>
+        <form id="plForm" novalidate>
+          <div class="field picker">
+            <label for="plFind">Contributor</label>
+            <input id="plFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="plResults">
+            <ul class="pick-results" id="plResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="plChosen">New contributor</div>
+          </div>
+          <div id="plNew">
+            <div class="row">
+              <div class="field"><label for="plName">Full name</label><input id="plName" maxlength="80"></div>
+              <div class="field"><label for="plEmail">Email (optional)</label><input id="plEmail" type="email" maxlength="120"></div>
+            </div>
+            <div class="field"><label for="plAddr">Street address (private)</label><input id="plAddr" maxlength="160"></div>
+            <div class="row">
+              <div class="field"><label for="plArea">Neighborhood</label><input id="plArea" list="areasA" maxlength="60"></div>
+              <div class="field"><label for="plShow">Show publicly as</label><select id="plShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select></div>
+            </div>
+          </div>
+          <label class="hint consent"><input type="checkbox" id="plPlan"><span>Paid in smaller amounts over time (giving plan)</span></label>
+          <div class="row" id="plPlanBox" hidden>
+            <div class="field"><label for="plInst">Each payment</label><input id="plInst" type="number" min="1" step="0.01"></div>
+            <div class="field"><label for="plFreq">How often</label><select id="plFreq"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="quarterly">Every 3 months</option></select></div>
+            <div class="field"><label for="plCount">Number of payments</label><input id="plCount" type="number" min="2" max="120" step="1" value="6"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="plAmt">Pledge amount</label><input id="plAmt" type="number" min="1" max="2000000" step="0.01" required></div>
+            <div class="field"><label for="plDate">Date pledged</label><input id="plDate" type="date" required></div>
+          </div>
+          <button class="btn" type="submit">Save pledge</button>
+          <div id="plMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+
+      <!-- RECORD EXPENSE FORM -->
+      <div class="card rec-card block" id="recExpenseCard" data-need="treasurer" hidden>
+        <div class="rec-card-head">
+          <h2>Record an expense</h2>
+          <p class="sub">Legal fees, expert reports, public filings, outreach, and land acquisition costs.</p>
+        </div>
         <form id="eForm" novalidate>
           <div class="row">
             <div class="field"><label for="eDate">Date</label><input id="eDate" type="date" required></div>
@@ -194,8 +421,31 @@
 
     <!-- PLEDGES -->
     <section data-cpanel="pledges" hidden>
-      <div class="card">
-        <h2>Pledges</h2>
+      <div class="pledge-subtabs-wrap">
+        <div class="pledge-subtabs" id="pledgeSubtabs" role="tablist" aria-label="Pledges and Plans View">
+          <button type="button" class="pledge-tab-btn active" data-subtab="pledges" role="tab" aria-selected="true">
+            <span class="subtab-icon">🤝</span> Pledges
+          </button>
+          <button type="button" class="pledge-tab-btn" data-subtab="plans" role="tab" aria-selected="false">
+            <span class="subtab-icon">🗓️</span> Giving Plans
+          </button>
+        </div>
+        <div class="subtabs-actions">
+          <button class="btn" type="button" id="btnOpenPledgeForm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Record Pledge</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PLEDGES TABLE CARD -->
+      <div class="card pledge-subcard" id="pledgesTableCard">
+        <div class="card-head-row">
+          <div>
+            <h2>Pledges</h2>
+            <p class="sub">One-time and open commitments recorded for the community fund.</p>
+          </div>
+        </div>
         <div class="filters">
           <div class="field"><label for="pgSearch">Search</label><input id="pgSearch" type="search" placeholder="Name or email"></div>
           <div class="field"><label for="pgStatus">Status</label><select id="pgStatus"><option value="">All</option><option value="open">Open</option><option value="partial">Partly paid</option><option value="paid">Paid</option><option value="withdrawn">Withdrawn</option><option value="cancelled">Cancelled</option></select></div>
@@ -203,18 +453,96 @@
         <div class="tablewrap"><table><thead><tr><th>Date</th><th>Contributor</th><th>Neighborhood</th><th class="r">Amount</th><th>Status</th><th>Entered by</th><th></th></tr></thead><tbody id="pledgeRows"></tbody></table></div>
         <div class="pager" id="pledgePager"></div>
       </div>
-      <div class="card block">
-        <h2>Giving plans</h2>
-        <p class="sub">Donors giving smaller amounts over time. Card plans are charged automatically and stop by themselves after the last payment; hand-collected plans are counted as deposits are recorded against them.</p>
+
+      <!-- GIVING PLANS TABLE CARD -->
+      <div class="card pledge-subcard block" id="plansTableCard" hidden>
+        <div class="card-head-row">
+          <div>
+            <h2>Giving plans</h2>
+            <p class="sub">Donors giving smaller amounts over time. Card plans are charged automatically and stop by themselves after the last payment; hand-collected plans are counted as deposits are recorded against them.</p>
+          </div>
+        </div>
         <div class="filters"><div class="field"><label for="gpStatus">Status</label><select id="gpStatus"><option value="">All</option><option value="active">Active</option><option value="pending">Waiting for setup</option><option value="past_due">Payment failed</option><option value="completed">Completed</option><option value="cancelled">Stopped</option></select></div></div>
         <div class="tablewrap"><table><thead><tr><th>Started</th><th>Contributor</th><th class="r">Each payment</th><th>How often</th><th>Made</th><th>Next payment</th><th>Status</th><th></th></tr></thead><tbody id="gplanRows"></tbody></table></div>
         <div class="pager" id="gplanPager"></div>
+      </div>
+
+      <!-- INLINE RECORD PLEDGE FORM (BLOG-STYLE) -->
+      <div class="card pledge-subcard" id="inlinePledgeCard" hidden>
+        <div class="editor-header">
+          <button class="btn small outline" type="button" id="btnBackFromPledge">
+            <span>←</span> Back to Pledges
+          </button>
+          <div>
+            <h2>Record a Pledge</h2>
+            <p class="sub">Log a written, phone, or in-person commitment from a community contributor.</p>
+          </div>
+        </div>
+        <form id="plInForm" novalidate>
+          <div class="field picker">
+            <label for="plInFind">Contributor</label>
+            <input id="plInFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="plInResults">
+            <ul class="pick-results" id="plInResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="plInChosen">New contributor</div>
+          </div>
+          <div id="plInNew">
+            <div class="row">
+              <div class="field"><label for="plInName">Full name</label><input id="plInName" maxlength="80"></div>
+              <div class="field"><label for="plInEmail">Email (optional)</label><input id="plInEmail" type="email" maxlength="120"></div>
+            </div>
+            <div class="field"><label for="plInAddr">Street address (private)</label><input id="plInAddr" maxlength="160"></div>
+            <div class="row">
+              <div class="field"><label for="plInArea">Neighborhood</label><input id="plInArea" list="areasA" maxlength="60"></div>
+              <div class="field"><label for="plInShow">Show publicly as</label><select id="plInShow"><option value="initial">First name and last initial</option><option value="anon">Anonymous neighbor</option></select></div>
+            </div>
+          </div>
+          <label class="hint consent"><input type="checkbox" id="plInPlan"><span>Paid in smaller amounts over time (giving plan)</span></label>
+          <div class="row" id="plInPlanBox" hidden>
+            <div class="field"><label for="plInInst">Each payment ($)</label><input id="plInInst" type="number" min="1" step="0.01"></div>
+            <div class="field"><label for="plInFreq">How often</label><select id="plInFreq"><option value="weekly">Weekly</option><option value="monthly" selected>Monthly</option><option value="quarterly">Every 3 months</option></select></div>
+            <div class="field"><label for="plInCount">Number of payments</label><input id="plInCount" type="number" min="2" max="120" step="1" value="6"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="plInAmt">Pledge amount ($)</label><input id="plInAmt" type="number" min="1" max="2000000" step="0.01" placeholder="0.00" required></div>
+            <div class="field"><label for="plInDate">Date pledged</label><input id="plInDate" type="date" required></div>
+          </div>
+          <div class="form-action-row">
+            <button class="btn" type="submit">Save Pledge</button>
+            <button class="btn ghost" type="button" id="btnCancelPledge">Cancel</button>
+          </div>
+          <div id="plInMsg" class="note" hidden role="status"></div>
+        </form>
       </div>
     </section>
 
     <!-- MONEY -->
     <section data-cpanel="money" hidden>
-      <div class="card">
+      <div class="money-subtabs-wrap">
+        <div class="money-subtabs" id="moneySubtabs" role="tablist" aria-label="Money In and Out View">
+          <button type="button" class="money-tab-btn active" data-subtab="deposits" role="tab" aria-selected="true">
+            <span class="subtab-icon">💰</span> Deposits Received
+          </button>
+          <button type="button" class="money-tab-btn" data-subtab="expenses" role="tab" aria-selected="false">
+            <span class="subtab-icon">🧾</span> Expenses
+          </button>
+          <button type="button" class="money-tab-btn" data-subtab="refunds" role="tab" aria-selected="false">
+            <span class="subtab-icon">↩️</span> Refunds &amp; Payouts
+          </button>
+        </div>
+        <div class="subtabs-actions">
+          <button class="btn" type="button" id="btnOpenDepositForm">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Record Deposit</span>
+          </button>
+          <button class="btn" type="button" id="btnOpenExpenseForm" data-need="treasurer" hidden>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Record Expense</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. DEPOSITS RECEIVED CARD -->
+      <div class="card money-subcard" id="depositsTableCard">
         <h2>Deposits received</h2>
         <div class="filters"><div class="field"><label for="mgSearch">Search</label><input id="mgSearch" type="search" placeholder="Public label, reference or slip"></div>
           <div class="field"><label for="mgMethod">Method</label><select id="mgMethod"><option value="">All</option><option>Online (Stripe)</option><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div></div>
@@ -231,15 +559,95 @@
           <div id="rfMsg" class="note" hidden role="status"></div>
         </form>
       </div>
-      <div class="card block">
+
+      <!-- 2. EXPENSES CARD -->
+      <div class="card money-subcard block" id="expensesTableCard" hidden>
+        <h2>Expenses</h2>
+        <div class="tablewrap"><table><thead><tr><th>Date</th><th>Paid to</th><th>Category</th><th>Status</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="expenseRows"></tbody></table></div>
+        <div class="pager" id="expensePager"></div>
+      </div>
+
+      <!-- 3. REFUNDS CARD -->
+      <div class="card money-subcard block" id="refundsTableCard" hidden>
         <h2>Refunds, chargebacks and payouts</h2>
         <div class="tablewrap"><table><thead><tr><th>Date</th><th>To</th><th>Type</th><th>Method</th><th>Reason</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="refundRows"></tbody></table></div>
         <div class="pager" id="refundPager"></div>
       </div>
-      <div class="card block">
-        <h2>Expenses</h2>
-        <div class="tablewrap"><table><thead><tr><th>Date</th><th>Paid to</th><th>Category</th><th>Status</th><th class="r">Amount</th><th>Entered by</th><th></th></tr></thead><tbody id="expenseRows"></tbody></table></div>
-        <div class="pager" id="expensePager"></div>
+
+      <!-- INLINE RECORD DEPOSIT FORM (BLOG-STYLE) -->
+      <div class="card money-subcard" id="inlineDepositCard" hidden>
+        <div class="editor-header">
+          <button class="btn small outline" type="button" id="btnBackFromDeposit">
+            <span>←</span> Back to Deposits
+          </button>
+          <div>
+            <h2>Record a Deposit Received</h2>
+            <p class="sub">Log checks, cash, Zelle, bank transfers, or GoFundMe payouts applied to pledges.</p>
+          </div>
+        </div>
+        <form id="rInForm" novalidate>
+          <div class="field picker">
+            <label for="rInFind">Received from</label>
+            <input id="rInFind" type="search" autocomplete="off" placeholder="Search name or email; leave blank for a new person" aria-controls="rInResults">
+            <ul class="pick-results" id="rInResults" role="listbox" aria-label="Matching contributors" hidden></ul>
+            <div class="chosen" id="rInChosen">New contributor</div>
+          </div>
+          <div id="rInNew" class="row">
+            <div class="field"><label for="rInFull">Full name (private, optional)</label><input id="rInFull" maxlength="80"></div>
+            <div class="field"><label for="rInLabel">Public label</label><input id="rInLabel" placeholder="Blank = Anonymous neighbor" maxlength="60"></div>
+            <div class="field"><label for="rInArea">Neighborhood</label><input id="rInArea" list="areasA" maxlength="60"></div>
+            <div class="field"><label for="rInEmail">Email (optional)</label><input id="rInEmail" type="email" maxlength="120"></div>
+          </div>
+          <div id="rInOwed" class="hint" hidden></div>
+          <div class="field" id="rInPlanBox" hidden><label for="rInPlan">Apply to a giving plan</label><select id="rInPlan"></select></div>
+          <div class="row">
+            <div class="field"><label for="rInAmt">Amount ($)</label><input id="rInAmt" type="number" min="0.01" max="2000000" step="0.01" placeholder="0.00" required></div>
+            <div class="field"><label for="rInDate">Date received</label><input id="rInDate" type="date" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="rInMethod">Method</label><select id="rInMethod"><option>Check</option><option>Cash</option><option>Zelle</option><option>Bank transfer</option><option>GoFundMe</option><option>Other</option></select></div>
+            <div class="field"><label for="rInNote">Check number or reference (private)</label><input id="rInNote" maxlength="80" placeholder="e.g. Check #1042"></div>
+          </div>
+          <div class="field"><label for="rInDep">Bank deposit slip or batch (private)</label><input id="rInDep" maxlength="80" placeholder="e.g. DEP-2026-10-16"></div>
+          <label class="hint consent"><input type="checkbox" id="rInEmailReceipt" checked><span>Email a receipt to contributor (if email on file)</span></label>
+          <div class="form-action-row">
+            <button class="btn" type="submit">Save Deposit</button>
+            <button class="btn ghost" type="button" id="btnCancelDeposit">Cancel</button>
+          </div>
+          <div id="rInMsg" class="note" hidden role="status"></div>
+        </form>
+      </div>
+
+      <!-- INLINE RECORD EXPENSE FORM (BLOG-STYLE) -->
+      <div class="card money-subcard" id="inlineExpenseCard" hidden>
+        <div class="editor-header">
+          <button class="btn small outline" type="button" id="btnBackFromExpense">
+            <span>←</span> Back to Expenses
+          </button>
+          <div>
+            <h2>Record an Expense</h2>
+            <p class="sub">Log legal fees, court filings, expert reports, outreach, and operational costs.</p>
+          </div>
+        </div>
+        <form id="eInForm" novalidate>
+          <div class="row">
+            <div class="field"><label for="eInDate">Date</label><input id="eInDate" type="date" required></div>
+            <div class="field"><label for="eInAmt">Amount ($)</label><input id="eInAmt" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="eInPayee">Paid to</label><input id="eInPayee" maxlength="80" placeholder="e.g. Lewis, Longman &amp; Walker" required></div>
+            <div class="field"><label for="eInCat">Category</label><select id="eInCat"><option>Legal fees</option><option>Expert reports</option><option>Filing and court fees</option><option>Public records</option><option>Printing and outreach</option><option>Platform and bank fees</option><option>Registration and filings</option><option>Land acquisition</option><option>Other</option></select></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="eInDesc">Description (shown publicly)</label><input id="eInDesc" maxlength="160" placeholder="e.g. Legal preparation for court petition"></div>
+            <div class="field"><label for="eInStatus">Status</label><select id="eInStatus"><option value="paid">Paid</option><option value="unpaid">Unpaid bill</option></select></div>
+          </div>
+          <div class="form-action-row">
+            <button class="btn" type="submit">Save Expense</button>
+            <button class="btn ghost" type="button" id="btnCancelExpense">Cancel</button>
+          </div>
+          <div id="eInMsg" class="note" hidden role="status"></div>
+        </form>
       </div>
     </section>
 
@@ -308,28 +716,137 @@
       </div>
     </section>
 
-    <!-- UPDATES -->
+    <!-- BLOG & UPDATES -->
     <section data-cpanel="news" data-need="treasurer" hidden>
-      <div class="grid2">
-        <div class="card">
-          <h2 id="nTitle">New update</h2>
-          <form id="nForm" novalidate>
-            <div class="field"><label for="nHead">Title</label><input id="nHead" maxlength="120" required></div>
-            <div class="row">
-              <div class="field"><label for="nSlug">Web address</label><input id="nSlug" maxlength="80" placeholder="made from the title"></div>
-              <div class="field"><label for="nDate">Date</label><input id="nDate" type="date" required></div>
+      <!-- 1. POSTS TABLE VIEW (Default) -->
+      <div class="card" id="newsListCard">
+        <div class="card-head-row">
+          <div>
+            <h2>Blog &amp; Newsroom</h2>
+            <p class="sub">Manage news articles, announcements and environmental updates published to the community.</p>
+          </div>
+          <button class="btn" type="button" id="btnCreatePost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Create Blog Post</span>
+          </button>
+        </div>
+
+        <div class="filters">
+          <div class="field">
+            <label for="newsSearch">Search</label>
+            <input id="newsSearch" type="search" placeholder="Search by title or topic...">
+          </div>
+          <div class="field">
+            <label for="newsFilter">Status</label>
+            <select id="newsFilter">
+              <option value="">All statuses</option>
+              <option value="published">Published only</option>
+              <option value="draft">Drafts only</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th class="r">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="newsRows"></tbody>
+          </table>
+        </div>
+        <div class="pager" id="newsPager"></div>
+      </div>
+
+      <!-- 2. CREATE / EDIT POST VIEW (Hidden by default) -->
+      <div class="card" id="newsEditorCard" hidden>
+        <div class="editor-header">
+          <button class="btn small ghost" type="button" id="btnBackToNews">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            <span>Back to all posts</span>
+          </button>
+          <div>
+            <h2 id="nTitle">New blog post</h2>
+            <p class="sub">Compose or edit an article for the website.</p>
+          </div>
+        </div>
+
+        <form id="nForm" novalidate>
+          <div class="field">
+            <label for="nHead">Article title</label>
+            <input id="nHead" maxlength="120" placeholder="e.g. Rattlesnake Slough Watershed Study Published" required>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="nSlug">Web address (slug)</label>
+              <input id="nSlug" maxlength="80" placeholder="auto-generated from title">
             </div>
-            <div class="field"><label for="nSummary">Summary (shown in the list and in search results)</label><input id="nSummary" maxlength="280"></div>
-            <div class="field"><label for="nBody">Text (blank line between paragraphs)</label><textarea id="nBody" maxlength="20000" class="tall"></textarea></div>
-            <label class="hint consent"><input type="checkbox" id="nPub"><span>Published (visible on the website)</span></label>
-            <div class="btnrow"><button class="btn" type="submit">Save update</button><button class="btn ghost" type="button" id="nNew">Start a new one</button></div>
-            <div id="nMsg" class="note" hidden role="status"></div>
-          </form>
-        </div>
-        <div class="card">
-          <h2>All updates</h2>
-          <div class="tablewrap"><table><thead><tr><th>Date</th><th>Title</th><th>Status</th><th></th></tr></thead><tbody id="newsRows"></tbody></table></div>
-        </div>
+            <div class="field">
+              <label for="nDate">Publication date</label>
+              <input id="nDate" type="date" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="field">
+              <label for="nAuthor">Author</label>
+              <input id="nAuthor" maxlength="60" placeholder="e.g. SMART Manatee Team">
+            </div>
+            <div class="field">
+              <label for="nTopic">Topic / Category</label>
+              <input id="nTopic" maxlength="60" placeholder="e.g. Flooding · Rattlesnake Slough">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="nCover">Cover image URL</label>
+            <div class="file-upload-wrap">
+              <input id="nCover" maxlength="250" placeholder="https://... or click Upload image">
+              <button class="btn small ghost" type="button" id="nUploadBtn">Upload image</button>
+              <input type="file" id="nFile" accept="image/*" class="hp" aria-hidden="true">
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="nCaption">Cover caption (optional)</label>
+            <input id="nCaption" maxlength="160" placeholder="e.g. Flooding near Rattlesnake Slough">
+          </div>
+
+          <div class="field">
+            <label for="nSummary">Summary / Excerpt (shown on blog list card)</label>
+            <input id="nSummary" maxlength="280" placeholder="Short description of the article...">
+          </div>
+
+          <div class="field">
+            <label for="nBody">Article content (Markdown)</label>
+            <div class="editor-toolbar">
+              <button type="button" class="editor-btn" data-ins="## ">H2</button>
+              <button type="button" class="editor-btn" data-ins="### ">H3</button>
+              <button type="button" class="editor-btn" data-ins="> ">Quote</button>
+              <button type="button" class="editor-btn" data-ins="- ">List</button>
+              <button type="button" class="editor-btn" data-ins="![caption](image-url)">Image</button>
+              <button type="button" class="editor-btn" data-ins="https://www.youtube.com/watch?v=...">YouTube</button>
+            </div>
+            <textarea id="nBody" maxlength="20000" class="tall" placeholder="Write article content here using markdown..."></textarea>
+          </div>
+
+          <label class="hint consent">
+            <input type="checkbox" id="nPub">
+            <span>Published (visible publicly on the website)</span>
+          </label>
+
+          <div class="btnrow">
+            <button class="btn" type="submit">Save post</button>
+            <button class="btn ghost" type="button" id="btnCancelEdit">Cancel</button>
+            <button class="btn ghost" type="button" id="nNew" hidden>Start a new one</button>
+          </div>
+          <div id="nMsg" class="note" hidden role="status"></div>
+        </form>
       </div>
     </section>
 
@@ -427,6 +944,17 @@
               <div class="field"><label for="sDeadline">Target date (optional)</label><input id="sDeadline" type="date"></div>
             </div>
           </fieldset>
+          <fieldset class="set"><legend>Page visibility & navigation</legend>
+            <p class="hint">Show or hide optional pages from the public navigation menu.</p>
+            <div class="row">
+              <label class="field consent"><input type="checkbox" id="sPagePark" checked><span>Show "Park vision" page</span></label>
+              <label class="field consent"><input type="checkbox" id="sPageLiveLocal" checked><span>Show "The Live Local Act" page</span></label>
+            </div>
+            <div class="row">
+              <label class="field consent"><input type="checkbox" id="sPageStats" checked><span>Show "Statistics" page</span></label>
+              <label class="field consent"><input type="checkbox" id="sPageBlog" checked><span>Show "Blog" page</span></label>
+            </div>
+          </fieldset>
           <div><button class="btn ghost" type="submit">Save settings</button></div>
           <div id="sMsg" class="note" hidden role="status"></div>
         </form>
@@ -436,6 +964,34 @@
         <p class="sub">Spelling is tidied automatically ("magnolia pt" becomes "Magnolia Point"). Use this to merge nicknames or different names for the same place. Future entries follow the new name.</p>
         <div class="tablewrap"><table><thead><tr><th>Neighborhood</th><th class="r">Contributors</th><th class="r">Anonymous gifts</th><th>Rename or merge into</th></tr></thead><tbody id="areaRows"></tbody></table></div>
         <div id="aMsg" class="note" hidden role="status"></div>
+      </div>
+      <div class="card block">
+        <h2>Security &amp; Password</h2>
+        <p class="sub">Change your admin account password.</p>
+        <form id="changePassForm" novalidate>
+          <div class="row">
+            <div class="field">
+              <label for="newPass">New password</label>
+              <div class="input-eye-wrap">
+                <input id="newPass" type="password" minlength="6" required placeholder="At least 6 characters">
+                <button type="button" class="eye-btn" data-toggle="newPass" aria-label="Toggle password visibility">
+                  <svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="confirmPass">Confirm new password</label>
+              <div class="input-eye-wrap">
+                <input id="confirmPass" type="password" minlength="6" required placeholder="Repeat new password">
+                <button type="button" class="eye-btn" data-toggle="confirmPass" aria-label="Toggle password visibility">
+                  <svg class="eye-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div><button class="btn ghost" type="submit">Update password</button></div>
+          <div id="cpMsg" class="note" hidden role="status"></div>
+        </form>
       </div>
     </section>
 
@@ -480,7 +1036,9 @@
         <div id="acMsg" class="note" hidden role="status"></div>
       </div>
     </section>
-  </div>
+      </div> <!-- /dash-body -->
+    </div> <!-- /dash-main -->
+  </div> <!-- /#console (dash-shell) -->
 </div></main>
 <script type="module" src="/assets/js/admin.js"></script>
 </body>
