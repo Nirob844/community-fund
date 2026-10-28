@@ -115,7 +115,7 @@ async function loadConfig() {
   if (!CONFIG.turnstileSiteKey) return;
   window.onTurnstileLoad = () => {
     if (window.turnstile && $("#turnstile")) {
-      turnstileId = window.turnstile.render("#turnstile", { sitekey: CONFIG.turnstileSiteKey, appearance: "interaction-only" });
+      turnstileId = window.turnstile.render("#turnstile", { sitekey: CONFIG.turnstileSiteKey, appearance: "always" });
     }
   };
   document.head.append(h("script", { src: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad", async: true, defer: true }));
@@ -165,6 +165,9 @@ export function initPledgeForm() {
       if (!(body.amount >= L.minGift && body.amount <= max)) return note(msg, `Please enter ${plan ? "a payment" : "a pledge"} between ${fmt(L.minGift)} and ${fmt(max)}.`, "err");
       if (plan && !(Number.isInteger(body.plan.payments) && body.plan.payments >= 2 && body.plan.payments <= L.maxPlanPayments)) return note(msg, `Choose between 2 and ${L.maxPlanPayments} payments.`, "err");
       if (!$("pConsent").checked) return note(msg, "Please tick the box to confirm you have read the privacy notice.", "err");
+      if (CONFIG.turnstileSiteKey && turnstileId != null && !body.turnstileToken) {
+        return note(msg, "Please complete the security check above and try again.", "err");
+      }
       const origBtn = btn.textContent;
       btn.disabled = true;
       btn.classList.add("loading");

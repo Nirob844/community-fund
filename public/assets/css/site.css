@@ -313,6 +313,7 @@ footer.site nav{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:10px}
 .hero.short{padding-bottom:28px}
 .consent{display:flex;gap:10px;align-items:flex-start}
 input[type=checkbox]{width:auto;margin-top:3px;accent-color:var(--blue)}
+#turnstile{margin:12px 0}
 .staffbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0 4px}
 .staffbar .hint{flex:1}
 .staff-sum{margin-top:14px}

@@ -6,6 +6,6 @@ export default async () => json({
   supabaseUrl: process.env.SUPABASE_URL || "",
   supabaseAnonKey: process.env.SUPABASE_ANON_KEY || "",
   turnstileSiteKey: process.env.TURNSTILE_SITE_KEY || "",
-}, 200, { "cache-control": "public, max-age=300" });
+}, 200, { "cache-control": "no-store" });
 
 export const config = { path: "/api/config" };
