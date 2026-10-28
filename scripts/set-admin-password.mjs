@@ -17,7 +17,7 @@ const sb = createClient(url, serviceKey, {
   auth: { autoRefreshToken: false, persistSession: false },
 });
 
-const email = (process.argv[2] || process.env.TREASURER_EMAIL || "nirobhossainalip@gmail.com").trim().toLowerCase();
+const email = (process.argv[2] || process.env.TREASURER_EMAIL || "treasurer@smartmanatee.org").trim().toLowerCase();
 const password = process.argv[3] || "12345678";
 
 if (!password || password.length < 6) {

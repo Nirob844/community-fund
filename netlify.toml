@@ -3,6 +3,9 @@
   functions = "netlify/functions"
   command = "npm run check"
 
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "EMAIL_REPLY_TO,TREASURER_EMAIL"
+
 [functions]
   node_bundler = "esbuild"
 
