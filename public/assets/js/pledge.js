@@ -113,12 +113,22 @@ export function renderPledgeState(d) {
 async function loadConfig() {
   try { CONFIG = await (await fetch("/api/config")).json(); } catch { CONFIG = {}; }
   if (!CONFIG.turnstileSiteKey) return;
-  window.onTurnstileLoad = () => {
-    if (window.turnstile && $("#turnstile")) {
-      turnstileId = window.turnstile.render("#turnstile", { sitekey: CONFIG.turnstileSiteKey, appearance: "always" });
+  const renderTurnstile = () => {
+    const el = $("turnstile");
+    if (window.turnstile && el && turnstileId == null) {
+      try {
+        turnstileId = window.turnstile.render(el, { sitekey: CONFIG.turnstileSiteKey, appearance: "always" });
+      } catch (err) {
+        console.error("Turnstile render error:", err);
+      }
     }
   };
-  document.head.append(h("script", { src: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad", async: true, defer: true }));
+  window.onTurnstileLoad = renderTurnstile;
+  if (window.turnstile) {
+    renderTurnstile();
+  } else if (!document.querySelector('script[src*="turnstile"]')) {
+    document.head.append(h("script", { src: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=onTurnstileLoad", async: true, defer: true }));
+  }
 }
 
 export function initPledgeForm() {
